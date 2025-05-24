@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php include("assets/php/head.php")?>
+<?php include("components/head.php")?>
 
 <body id="top">
 
@@ -9,7 +9,7 @@
     - #HEADER
   -->
 
-  <?php include("assets/php/header.php")?>
+  <?php include("components/header.php")?>
 
   <main>
     <article>
@@ -417,7 +417,7 @@
     - #FOOTER
   -->
 
- <?php include("assets/php/footer.php")?>
+ <?php include("components/footer.php")?>
 
   <!-- 
     - custom js link
