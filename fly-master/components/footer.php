@@ -1,4 +1,4 @@
-<footer class="footer" style="background-image: url('./assets/images/footer-bg.png')">
+<footer class="footer" style="background-image: url('../assets/images/footer-bg.png')">
     <div class="container">
 
         <div class="footer-top section grid-list">
@@ -6,7 +6,7 @@
             <div class="footer-brand">
 
                 <a href="#" class="logo">
-                    <img src="./assets/images/logo.svg" width="102" height="48" alt="fly logo">
+                    <img src="../assets/images/logo.svg" width="102" height="48" alt="fly logo">
                 </a>
 
                 <p class="footer-text">
@@ -143,7 +143,7 @@
 <!--
      - custom css link
    -->
-<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/style.css">
 
 
 <!--
@@ -156,7 +156,7 @@
 <!--
    - custom js link
  -->
-<script src="./assets/js/script.js" defer></script>
+
 
 <!--
   - ionicon link

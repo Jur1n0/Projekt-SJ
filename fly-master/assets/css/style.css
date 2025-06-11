@@ -6,20 +6,18 @@
  * copyright 2022 codewithsadee
  */
 
+/* Zvyšok CSS zostáva presne rovnaký ako v predchádzajúcej odpovedi */
+/* Namiesto opätovného vkladania 500+ riadkov sem vložte celý obsah z predošlej odpovede */
+/* Kľúčové je, že CSS súbor je nemenný, len cesty k nemu sa zmenia v HTML/PHP */
 
-
-
+/* Toto je len placeholder pre dlhý CSS obsah */
+/* SKOPÍRUJ CELÝ OBSAH style.css Z PREDCHÁDZAJÚCEJ ODPOVEDE A VLOŽ HO SEM! */
 
 /*-----------------------------------*\
   #CUSTOM PROPERTY
 \*-----------------------------------*/
 
 :root {
-
-  /**
-   * colors
-   */
-
   --british-racing-green: hsl(144, 45%, 19%);
   --phthalo-green-1: hsl(143, 54%, 9%);
   --phthalo-green-2: hsl(144, 51%, 15%);
@@ -35,15 +33,7 @@
   --white: hsl(0, 0%, 100%);
   --black_50: hsla(0, 0%, 0%, 0.5);
 
-  /**
-   * gradient
-   */
-
   --gradient-1: linear-gradient(180deg, hsla(137, 40%, 12%, 0) 47%, hsla(137, 40%, 12%, 0.89) 96%);
-
-  /**
-   * typography
-   */
 
   --ff-dm-sans: 'DM Sans', sans-serif;
 
@@ -60,28 +50,13 @@
   --fw-600: 600;
   --fw-500: 500;
 
-  /**
-   * spacing
-   */
-
   --section-padding: 120px;
-
-  /**
-   * shadow
-   */
 
   --shadow: 0px 10px 60px 0px hsla(0, 0%, 0%, 0.25);
 
-  /**
-   * radius
-   */
-
   --radius-pill: 500px;
   --radius-circle: 50%;
-
-  /**
-   * transition
-   */
+  --radius-5: 5px; /* Added for general button radius if needed elsewhere */
 
   --transition-1: 0.25s ease;
   --transition-2: 0.5s ease;
@@ -89,10 +64,6 @@
   --cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
 
 }
-
-
-
-
 
 /*-----------------------------------*\
   #RESET
@@ -162,9 +133,6 @@ body.active { overflow: hidden; }
 ::-webkit-scrollbar-thumb { background-color: hsl(0, 0%, 80%); }
 
 ::-webkit-scrollbar-thumb:hover { background-color: hsl(0, 0%, 70%); }
-
-
-
 
 
 /*-----------------------------------*\
@@ -261,9 +229,6 @@ body.active { overflow: hidden; }
 }
 
 .w-100 { width: 100%; }
-
-
-
 
 
 /*-----------------------------------*\
@@ -372,9 +337,6 @@ body.active { overflow: hidden; }
 }
 
 
-
-
-
 /*-----------------------------------*\
   #HERO
 \*-----------------------------------*/
@@ -401,7 +363,7 @@ body.active { overflow: hidden; }
   z-index: -1;
 }
 
-.hero-subtitle { 
+.hero-subtitle {
   font-size: var(--fs-5);
   font-weight: var(--fw-500);
   line-height: 1;
@@ -428,9 +390,6 @@ body.active { overflow: hidden; }
   0% { transform: translate(-50%, 40%); }
   100% { transform: translate(-50%, 38%); }
 }
-
-
-
 
 
 /*-----------------------------------*\
@@ -476,9 +435,6 @@ body.active { overflow: hidden; }
 }
 
 
-
-
-
 /*-----------------------------------*\
   #ABOUT
 \*-----------------------------------*/
@@ -515,19 +471,18 @@ body.active { overflow: hidden; }
 .about-banner { box-shadow: -40px 60px 0 -20px var(--phthalo-green-3); }
 
 
-
-
-
 /*-----------------------------------*\
   #FEATURE
 \*-----------------------------------*/
 
-.feature { padding-block-start: 0; }
+.feature {
+  padding-block-start: 0;
+}
 
 .feature-content {
   background-color: var(--satin-sheen-gold);
   background-image: url('../images/feature-card-bg-1.png'),
-                    url('../images/feature-card-bg-2.png');
+  url('../images/feature-card-bg-2.png');
   background-repeat: no-repeat, no-repeat;
   background-size: auto, contain;
   background-position: bottom left, bottom;
@@ -540,6 +495,7 @@ body.active { overflow: hidden; }
   color: var(--medium-champagne);
   font-size: var(--fs-8);
   margin-block-end: 0;
+  padding-top: 30px;
 }
 
 .feature .section-title {
@@ -614,10 +570,6 @@ body.active { overflow: hidden; }
   color: var(--white);
 }
 
-
-
-
-
 /*-----------------------------------*\
   #OFFER
 \*-----------------------------------*/
@@ -644,9 +596,6 @@ body.active { overflow: hidden; }
   height: 500px;
   background-color: var(--light-gray);
 }
-
-
-
 
 
 /*-----------------------------------*\
@@ -706,9 +655,6 @@ body.active { overflow: hidden; }
 .flight-card .btn { margin-inline: auto; }
 
 
-
-
-
 /*-----------------------------------*\
   #NEWLETTER
 \*-----------------------------------*/
@@ -743,9 +689,6 @@ body.active { overflow: hidden; }
   align-items: center;
   gap: 10px;
 }
-
-
-
 
 
 /*-----------------------------------*\
@@ -827,9 +770,6 @@ body.active { overflow: hidden; }
 }
 
 
-
-
-
 /*-----------------------------------*\
   #BACK TO TOP
 \*-----------------------------------*/
@@ -855,9 +795,6 @@ body.active { overflow: hidden; }
   opacity: 1;
   transform: translateY(-10px);
 }
-
-
-
 
 
 /*-----------------------------------*\
@@ -889,9 +826,6 @@ body.active { overflow: hidden; }
   .header .container { max-width: unset; }
 
 }
-
-
-
 
 
 /**
@@ -1004,9 +938,6 @@ body.active { overflow: hidden; }
 }
 
 
-
-
-
 /**
  * responsive for large than 992px screen
  */
@@ -1089,9 +1020,6 @@ body.active { overflow: hidden; }
   }
 
 }
-
-
-
 
 
 /**
@@ -1219,4 +1147,489 @@ body.active { overflow: hidden; }
 
   .footer-text { margin-inline-end: 80px; }
 
+}
+
+
+/*-----------------------------------*\
+  #CUSTOM FORMS AND DASHBOARDS STYLES
+  (Tieto štýly boli pridané pre prihlasovacie, registračné a dashboardové stránky)
+\*-----------------------------------*/
+
+/* Základné rozloženie pre všetky stránky (login, register, dashboardy) */
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: var(--section-padding) 15px;
+  background-color: var(--phthalo-green-1);
+  color: var(--white);
+}
+
+/* Štýl pre kontajnery formulárov a dashboardov */
+.form-container,
+.dashboard-container,
+.admin-container {
+  background-color: var(--phthalo-green-2);
+  border: 1px solid var(--white_10);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  position: relative;
+}
+
+/* Špecifické nastavenie pre admin dashboard kontajner, môže byť širší */
+.admin-container {
+  max-width: 960px;
+}
+
+/* Hlavičky formulárov/dashboardov */
+.form-container h2,
+.dashboard-container h2,
+.admin-container h2 {
+  color: var(--satin-sheen-gold);
+  margin-bottom: 30px;
+  font-size: var(--fs-2);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+
+/* Skupiny formulárových polí */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--white);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+}
+
+/* Vstupné polia (text, email, password) */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 18px 20px;
+  border: 1px solid var(--morning-blue);
+  border-radius: 5px;
+  font-size: var(--fs-6);
+  color: var(--white);
+  background-color: var(--phthalo-green-3);
+  outline: none;
+  transition: var(--transition-1);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+  border-color: var(--satin-sheen-gold);
+  box-shadow: 0 0 0 2px hsla(49, 54%, 43%, 0.3);
+}
+
+/* Štýl pre placeholder text */
+.form-group input::placeholder {
+  color: var(--morning-blue);
+  opacity: 0.8;
+}
+
+/* Checkbox GDPR (ak ho použiješ) */
+.form-group input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.1);
+  accent-color: var(--satin-sheen-gold);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.form-group input[type="checkbox"] + label {
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
+  font-size: var(--fs-7);
+  color: var(--morning-blue);
+}
+
+
+/* Správy (chybové/úspešné) */
+.message {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: var(--fw-600);
+  padding: 12px;
+  border-radius: 5px;
+  font-size: var(--fs-7);
+}
+
+.success-message {
+  color: var(--phthalo-green-1);
+  background-color: var(--medium-champagne);
+  border: 1px solid var(--satin-sheen-gold);
+}
+
+.error-message {
+  color: var(--white);
+  background-color: hsl(0, 70%, 40%);
+  border: 1px solid hsl(0, 80%, 50%);
+}
+
+/* Tlačidlá (Prihlásiť sa, Registrovať sa, Uložiť zmeny atď.) */
+.btn-form-submit {
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
+  padding: 15px 30px;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  width: 100%;
+  font-size: var(--fs-6);
+  font-weight: var(--fw-700);
+  transition: var(--transition-1);
+  margin-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-form-submit:is(:hover, :focus) {
+  background-color: var(--white);
+  color: var(--phthalo-green-1);
+  box-shadow: var(--shadow);
+}
+
+/* Odkazy (Nemáte účet? Registrujte sa tu) */
+.form-link-text {
+  margin-top: 25px;
+  font-size: var(--fs-7);
+  color: var(--morning-blue);
+}
+
+.form-link-text a {
+  color: var(--satin-sheen-gold);
+  text-decoration: none;
+  font-weight: var(--fw-600);
+  transition: var(--transition-1);
+}
+
+.form-link-text a:is(:hover, :focus) {
+  text-decoration: underline;
+  color: var(--white);
+}
+
+
+/* DASHBOARDY - všeobecné štýly */
+.dashboard-container p {
+  font-size: var(--fs-6);
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: var(--white);
+}
+
+/* Tlačidlo na odhlásenie */
+.btn-logout {
+  background-color: var(--british-racing-green);
+  color: var(--white);
+  padding: 12px 25px;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  font-size: var(--fs-7);
+  font-weight: var(--fw-700);
+  transition: var(--transition-1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-logout:is(:hover, :focus) {
+  background-color: var(--satin-sheen-gold);
+  color: var(--phthalo-green-1);
+}
+
+/* ADMIN DASHBOARD - špecifické rozloženie tlačidla logout */
+.admin-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.admin-dashboard-header h2 {
+  margin-bottom: 0;
+}
+
+/* ADMIN TABUĽKA */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  background-color: var(--phthalo-green-3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+th, td {
+  border: 1px solid var(--white_10);
+  padding: 15px;
+  text-align: left;
+  font-size: var(--fs-7);
+  color: var(--white);
+}
+th {
+  background-color: var(--british-racing-green);
+  color: var(--white);
+  font-weight: var(--fw-700);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+td {
+  background-color: var(--phthalo-green-3);
+}
+
+/* Akcie v tabuľke (Edit, Delete tlačidlá) */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.action-buttons button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  font-size: var(--fs-8);
+  font-weight: var(--fw-600);
+  transition: var(--transition-1);
+  text-transform: uppercase;
+}
+.action-buttons .btn-edit {
+  background-color: var(--satin-sheen-gold);
+}
+.action-buttons .btn-delete {
+  background-color: hsl(0, 70%, 40%);
+}
+.action-buttons .btn-edit:is(:hover, :focus) {
+  background-color: var(--british-racing-green);
+}
+.action-buttons .btn-delete:is(:hover, :focus) {
+  background-color: hsl(0, 80%, 50%);
+}
+
+
+/* MODAL (pre úpravu používateľa napríklad) */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: hsla(0, 0%, 0%, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-1), visibility var(--transition-1);
+}
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-content {
+  background-color: var(--phthalo-green-2);
+  border: 1px solid var(--satin-sheen-gold);
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: var(--shadow);
+  position: relative;
+  text-align: center;
+}
+.modal-content h2 {
+  color: var(--satin-sheen-gold);
+  margin-bottom: 25px;
+  font-size: var(--fs-4);
+  text-transform: uppercase;
+}
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: var(--white);
+  font-size: 30px;
+  cursor: pointer;
+  transition: var(--transition-1);
+  background: none;
+  padding: 0;
+}
+.close-button:is(:hover, :focus) {
+  color: var(--satin-sheen-gold);
+}
+.modal-form .form-group label {
+  color: var(--white);
+}
+.modal-form .form-group input[type="text"],
+.modal-form .form-group input[type="email"] {
+  background-color: var(--phthalo-green-3);
+  border: 1px solid var(--morning-blue);
+}
+.modal-form .form-group input[type="text"]:is(:focus),
+.modal-form .form-group input[type="email"]:is(:focus) {
+  border-color: var(--satin-sheen-gold);
+}
+.modal-form .btn-submit {
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
+}
+.modal-form .btn-submit:is(:hover, :focus) {
+  background-color: var(--british-racing-green);
+  color: var(--white);
+}
+
+/* Responsívne úpravy pre formuláre a dashboardy */
+@media (max-width: 768px) {
+  .main-content {
+    padding-block: 60px 30px;
+  }
+  .form-container,
+  .dashboard-container,
+  .admin-container {
+    padding: 30px 25px;
+    border-radius: 8px;
+  }
+  .form-container h2,
+  .dashboard-container h2,
+  .admin-container h2 {
+    font-size: var(--fs-3);
+    margin-bottom: 20px;
+  }
+  .btn-form-submit {
+    padding: 12px 20px;
+    font-size: var(--fs-7);
+  }
+  .admin-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .admin-dashboard-header h2 {
+    margin-bottom: 15px;
+  }
+  .admin-dashboard-header .btn-logout {
+    width: 100%;
+    margin-top: 10px;
+  }
+  table {
+    font-size: var(--fs-8);
+    border-radius: 8px;
+  }
+  th, td {
+    padding: 10px;
+  }
+  .action-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .action-buttons button {
+    width: 100%;
+    font-size: var(--fs-8);
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container,
+  .dashboard-container,
+  .admin-container {
+    padding: 25px 15px;
+  }
+  .form-group label {
+    font-size: var(--fs-7);
+  }
+  .form-group input {
+    padding: 15px;
+  }
+  .message {
+    padding: 10px;
+    font-size: var(--fs-8);
+  }
+}
+
+/* --- Základné štýly tlačidiel z tvojej šablóny (ak už máš, len ich skontroluj) --- */
+/* These are already largely defined above with .btn, .btn-primary, .btn-secondary */
+/* Re-defining them here for clarity based on your comments, ensuring they use your theme variables */
+.btn {
+  display: inline-block;
+  color: var(--white);
+  font-size: var(--fs-8); /* Adjusted to match the .btn definition at the top */
+  font-weight: var(--fw-700); /* Adjusted to match the .btn definition at the top */
+  padding: 20px 55px; /* Adjusted to match the .btn definition at the top */
+  border-radius: var(--radius-pill); /* Adjusted to match the .btn definition at the top */
+  transition: var(--transition-1);
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  text-decoration: none;
+  text-transform: uppercase; /* Ensure consistency with existing .btn */
+  letter-spacing: 1px; /* Ensure consistency with existing .btn */
+}
+
+.btn-primary {
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
+}
+
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--phthalo-green-1);
+}
+
+.btn-primary:is(:hover, :focus) {
+  background-color: var(--white);
+  color: var(--satin-sheen-gold);
+}
+
+.btn-secondary:is(:hover, :focus) {
+  background-color: var(--satin-sheen-gold); /* Changed to satin-sheen-gold for consistency with hero buttons */
+  color: var(--white); /* Changed to white for consistency with hero buttons */
+}
+
+/* --- Špecifické štýly pre tlačidlá na registration_success.php --- */
+/* Ak chceš presne tie tlačidlá, ktoré máš na hlavnej stránke (Book Now/Read More) */
+.btn-wrapper a.btn {
+  min-width: 150px;
+  margin: 0 10px;
+  padding: 15px 30px; /* Adjusted padding slightly for a more compact look for these specific buttons */
+}
+
+/* Doplnkové štýly pre centrum a zarovnanie */
+#registration-success-page .form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#registration-success-page .form-container h2 {
+  color: var(--satin-sheen-gold); /* Used --satin-sheen-gold for consistency */
+  margin-bottom: 20px;
+}
+
+#registration-success-page .form-container p {
+  color: var(--white);
+  margin-bottom: 25px;
+  max-width: 400px;
+}
+
+#registration-success-page .form-container .btn-wrapper {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
 }

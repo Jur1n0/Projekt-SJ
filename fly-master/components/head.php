@@ -13,12 +13,12 @@
     <!--
       - favicon
     -->
-    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="../favicon.svg" type="image/svg+xml">
 
     <!--
       - custom css link
     -->
-    <link rel="stylesheet" href="./assets/css/style.css">
+
 
     <!--
       - google font link
@@ -30,13 +30,13 @@
     <!--
       - preload images
     -->
-    <link rel="preload" as="image" href="./assets/images/hero-banner.png">
+    <link rel="preload" as="image" href="../assets/images/hero-banner.png">
 
 </head>
 <!--
    - custom js link
  -->
-<script src="./assets/js/script.js" defer></script>
+<script src="../assets/js/script.js" defer></script>
 
 <!--
   - ionicon link

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php include("components/head.php")?>
+<?php include("head.php") ?>
 
 <body id="top">
 
@@ -9,7 +9,7 @@
     - #HEADER
   -->
 
-  <?php include("components/header.php")?>
+  <?php include("header.php") ?>
 
   <main>
     <article>
@@ -31,7 +31,7 @@
             <a href="#" class="btn btn-secondary">Read More</a>
           </div>
 
-          <img src="./assets/images/hero-banner.png" width="1474" height="426" alt="airplane" class="abs-img">
+          <img src="../assets/images/hero-banner.png" width="1474" height="426" alt="airplane" class="abs-img">
 
         </div>
       </section>
@@ -44,7 +44,7 @@
         - #SERVICE
       -->
 
-      <section class="section service" aria-label="service">
+      <section class="section service" aria-label="service" id="service">
         <div class="container">
 
           <ul class="grid-list">
@@ -140,8 +140,8 @@
           </div>
 
           <figure class="about-banner img-holder" style="--width: 470; --height: 550;">
-            <img src="./assets/images/about-banner.jpg" width="470" height="550" loading="lazy" alt="about banner"
-              class="img-cover">
+            <img src="../assets/images/about-banner.jpg" width="470" height="550" loading="lazy" alt="about banner"
+                 class="img-cover">
           </figure>
 
         </div>
@@ -155,7 +155,7 @@
         - #FEATURE
       -->
 
-      <section class="section feature" aria-label="feature">
+      <section class="section feature" aria-label="feature" id="news">
         <div class="container">
 
           <ul class="grid-list">
@@ -182,7 +182,7 @@
 
             <li>
               <div class="feature-card has-before has-after img-holder"
-                style="--width: 370; --height: 452; background-image: url('./assets/images/feature-1.jpg')">
+                style="--width: 370; --height: 452; background-image: url('../assets/images/feature-1.jpg')">
 
                 <h3 class="h3">
                   <a href="#" class="card-title">Exclusive <br> new offers</a>
@@ -197,7 +197,7 @@
 
             <li>
               <div class="feature-card has-before has-after img-holder"
-                style="--width: 370; --height: 452; background-image: url('./assets/images/feature-2.jpg')">
+                style="--width: 370; --height: 452; background-image: url('../assets/images/feature-2.jpg')">
 
                 <h3 class="h3">
                   <a href="#" class="card-title">Join our <br> cabin crew</a>
@@ -223,9 +223,9 @@
         - #OFFER
       -->
 
-      <section class="offer" aria-label="offer">
+      <section class="offer" aria-label="offer" id="offer">
 
-        <div class="offer-content section" style="background-image: url('./assets/images/offer-bg.png')">
+        <div class="offer-content section" style="background-image: url('../assets/images/offer-bg.png')">
           <div class="container">
 
             <p class="section-subtitle">Special Offer</p>
@@ -243,7 +243,7 @@
           </div>
         </div>
 
-        <div class="offer-banner has-bg-image" style="background-image: url('./assets/images/offer-banner.jpg')"></div>
+        <div class="offer-banner has-bg-image" style="background-image: url('../assets/images/offer-banner.jpg')"></div>
 
       </section>
 
@@ -286,8 +286,8 @@
                 </h3>
 
                 <div class="card-banner">
-                  <img src="./assets/images/flight-1.png" width="263" height="84" loading="lazy"
-                    alt="new york to moscow flight airplane" class="w-100">
+                  <img src="../assets/images/flight-1.png" width="263" height="84" loading="lazy"
+                       alt="new york to moscow flight airplane" class="w-100">
                 </div>
 
                 <ul class="card-list">
@@ -334,8 +334,8 @@
                 </h3>
 
                 <div class="card-banner">
-                  <img src="./assets/images/flight-1.png" width="263" height="84" loading="lazy"
-                    alt="new york to moscow flight airplane" class="w-100">
+                  <img src="../assets/images/flight-1.png" width="263" height="84" loading="lazy"
+                       alt="new york to moscow flight airplane" class="w-100">
                 </div>
 
                 <ul class="card-list">
@@ -386,7 +386,7 @@
       -->
 
       <section class="section newsletter has-bg-image"
-        style="background-image: url('./assets/images/newsletter-bg.png')" aria-label="newsletter">
+               style="background-image: url('../assets/images/newsletter-bg.png')" aria-label="newsletter" id="contact">
         <div class="container">
 
           <div>
@@ -417,12 +417,12 @@
     - #FOOTER
   -->
 
- <?php include("components/footer.php")?>
+ <?php include("footer.php") ?>
 
   <!-- 
     - custom js link
   -->
-  <script src="./assets/js/script.js" defer></script>
+
 
   <!-- 
     - ionicon link
