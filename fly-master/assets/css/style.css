@@ -1609,3 +1609,500 @@ td {
   gap: 15px;
   margin-top: 30px;
 }
+
+/* ==========================================
+ * ADMIN DASHBOARD STYLES
+ * ========================================== */
+.admin-container {
+  max-width: 1200px;
+  margin: 80px auto 50px; /* Adjust top margin to account for header */
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.05);
+  color: hsl(240, 2%, 12%);
+}
+
+.admin-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.admin-dashboard-header h2 {
+  font-size: var(--fs-2);
+  color: var(--satin-sheen-gold);
+  margin: 0;
+}
+
+.admin-dashboard-header .btn-logout {
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: var(--fw-500);
+  transition: background-color var(--transition-2);
+}
+
+.admin-dashboard-header .btn-logout:is(:hover, :focus) {
+  background-color: var(--white);
+  color: var(--british-racing-green);
+}
+
+.admin-navigation {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--light-gray);
+  padding-bottom: 15px;
+}
+
+.btn-dashboard-nav {
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: var(--fw-500);
+  transition: background-color var(--transition-2);
+}
+
+.btn-dashboard-nav:is(:hover, :focus) {
+  background-color: var(--light-gray);
+  color:var(--british-racing-green);
+}
+
+.btn-dashboard-nav.active {
+  background-color: var(--phthalo-green-3);
+  color: var(--white);
+}
+
+.user-management-section h3,
+.news-management-section h3,
+.news-management-section h4 {
+  font-size: var(--fs-3);
+  color: var(--satin-sheen-gold);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: var(--baby-powder);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+table th {
+  background-color: var(--phthalo-green-2);
+  color: var(--white);
+  font-weight: var(--fw-700);
+  text-transform: uppercase;
+  font-size: 1.4rem;
+}
+
+table tr:nth-child(even) {
+  background-color: var(--white);
+}
+
+table tr:hover {
+  background-color: var(--medium-champagne);
+}
+
+table td.actions {
+  white-space: nowrap; /* Prevent wrapping of action buttons */
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: var(--fw-500);
+  transition: background-color var(--transition-2);
+  margin-right: 5px;
+}
+
+.btn-edit {
+  background-color: var(--vegas-gold);
+  color: var(--white);
+}
+
+.btn-edit:is(:hover, :focus) {
+  background-color: var(--satin-sheen-gold);
+}
+
+.btn-delete {
+  background-color: #dc3545; /* Red color for delete */
+  color: var(--white);
+}
+
+.btn-delete:is(:hover, :focus) {
+  background-color: #c82333;
+}
+
+/* Modálne okno */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background-color: var(--phthalo-green-1);
+  margin: auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.05);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  color: hsl(240, 2%, 12%);
+}
+
+.modal-content h3 {
+  text-align: center;
+  font-size: var(--fs-3);
+  color: var(--satin-sheen-gold);
+  margin-bottom: 25px;
+}
+
+.modal-content .close-button {
+  color: var(--morning-blue);
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-content .close-button:is(:hover, :focus) {
+  color: hsl(240, 2%, 12%);
+  text-decoration: none;
+}
+
+.modal-content .form-group {
+  margin-bottom: 20px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: var(--fw-500);
+  color: var(--white);
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content textarea {
+  width: calc(100% - 20px);
+  padding: 12px;
+  border: 1px solid var(--light-gray);
+  border-radius: 5px;
+  font-size: var(--fs-8);
+  background-color: var(--baby-powder);
+  color: hsl(240, 2%, 12%);
+}
+
+.modal-content textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.modal-content .btn-submit {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  font-size: var(--fs-6);
+  font-weight: var(--fw-700);
+  cursor: pointer;
+  transition: background-color var(--transition-2);
+}
+
+.modal-content .btn-submit:is(:hover, :focus) {
+  background-color: var(--white);
+  color: hsl(240, 2%, 12%);
+}
+
+/* Správy v modálnom okne */
+.modal-content .message {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.modal-content .success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+.modal-content .error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+/* ==========================================
+ * NEWS SECTION STYLES (index.php)
+ * ========================================== */
+.news {
+  padding-block: var(--section-padding);
+  background-color: var(--phthalo-green-2);
+}
+
+.news .section-title {
+  margin-block-end: 50px;
+}
+
+.news-card {
+  background-color: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.05);
+  transition: var(--transition-2);
+}
+
+.news-card:is(:hover, :focus-within) {
+  transform: translateY(-5px);
+  box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.03);
+}
+
+.news-card .card-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.news-card .card-banner img {
+  transition: transform 0.5s ease;
+}
+
+.news-card:is(:hover, :focus-within) .card-banner img {
+  transform: scale(1.05);
+}
+
+.news-card .card-content {
+  padding: 20px;
+}
+
+.news-card .card-title {
+  font-size: var(--fs-4);
+  color: hsl(240, 2%, 12%);
+  margin-block-end: 10px;
+  line-height: 1.3;
+  transition: color var(--transition-2);
+}
+
+.news-card .card-title:is(:hover, :focus) {
+  color: var(--british-racing-green);
+}
+
+.news-card .card-meta-list {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-block-end: 15px;
+  color: var(--morning-blue);
+  font-size: 1.4rem;
+}
+
+.news-card .card-meta-item ion-icon {
+  font-size: 1.6rem;
+  margin-inline-end: 5px;
+}
+
+.news-card .card-text {
+  font-size: var(--fs-8);
+  color: var(--morning-blue);
+  line-height: 1.7;
+}
+
+/* ==========================================
+ * NEWS ARCHIVE PAGE STYLES (news.php)
+ * ========================================== */
+
+.news-archive {
+  padding-top: 100px; /* Priestor pod headerom */
+  padding-bottom: 50px;
+  background-color: var(--phthalo-green-2); /* Pridané pre lepšie oddelenie */
+}
+
+.news-archive .section-subtitle {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.news-archive .section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.news-archive-list {
+  margin-top: 40px;
+  display: grid;
+  gap: 30px;
+}
+
+.news-archive-item {
+  background-color: var(--white);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-archive-item:is(:hover, :focus-within) {
+  transform: translateY(-5px);
+  box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.03);
+}
+
+.news-archive-item h3 {
+  font-size: var(--fs-3);
+  color: hsl(240, 2%, 12%);
+  margin-block-end: 15px;
+}
+
+.news-archive-item h3 a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-2);
+}
+
+.news-archive-item h3 a:is(:hover, :focus) {
+  color: var(--british-racing-green);
+}
+
+.news-archive-item .news-date {
+  font-size: 1.4rem;
+  color: var(--morning-blue);
+  margin-bottom: 15px;
+}
+
+.news-archive-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  max-height: 400px;
+
+}
+
+.news-archive-text {
+  font-size: var(--fs-8);
+  color: hsl(240, 2%, 12%);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.news-archive-item hr {
+  border: none;
+  border-top: 1px dashed var(--light-gray);
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.single-news-item {
+  background-color: var(--phthalo-green-1);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.05);
+  margin-top: 40px;
+}
+
+.single-news-item .news-date {
+  font-size: var(--fs-8);
+  color: var(--morning-blue);
+  margin-bottom: 20px;
+}
+
+.single-news-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain; /* Changed to contain to avoid cropping if aspect ratio is off */
+  border-radius: 8px;
+  margin-bottom: 30px;
+  background-color: var(--phthalo-green-1); /* Light background for images */
+}
+
+.single-news-text {
+  font-size: var(--fs-6);
+  color: var(--morning-blue);
+  line-height: 1.8;
+}
+
+.btn-read-more {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 8px 15px;
+  font-size: 1.4rem;
+  background-color: var(--british-racing-green);
+  color: var(--white);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color var(--transition-2);
+}
+
+.btn-read-more:is(:hover, :focus) {
+  background-color: var(--phthalo-green-1);
+}
+
+/* Media queries for news section */
+@media (min-width: 768px) {
+  .news-archive-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .news-archive-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.admin-container {
+  background-color: var(--phthalo-green-2);
+}
+

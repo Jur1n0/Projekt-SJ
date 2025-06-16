@@ -95,50 +95,80 @@
         </div>
       </section>
 
-      <section class="section feature" aria-label="feature" id="news">
-        <div class="container">
-          <ul class="grid-list">
-            <li>
-              <div class="feature-content has-before">
-                <p class="section-subtitle">Collect Miles</p>
-                <h2>
-                  <a href="#" class="section-title">Get discount next flights with our card</a>
-                </h2>
-                <p class="section-text">
-                  Non augue egestas, commodo velit eget, vestibulum tellus. Curabitur vulputate justo elit, at elementum
-                  orci pulvinar
-                  vel.
-                </p>
-                <a href="#" class="btn btn-secondary">Get Card</a>
-              </div>
-            </li>
+        <?php
+        require_once '../module/Database.php';
+        require_once '../classes/News.php';
 
-            <li>
-              <div class="feature-card has-before has-after img-holder"
-                style="--width: 370; --height: 452; background-image: url('../assets/images/feature-1.jpg')">
-                <h3 class="h3">
-                  <a href="#" class="card-title">Exclusive <br> new offers</a>
-                </h3>
-                <a href="#" class="card-btn">
-                  <ion-icon name="arrow-forward" aria-hidden"true"></ion-icon>
-                </a>
-              </div>
-            </li>
+        $db = new Database();
+        $pdo_conn = $db->getConnection();
+        $news_obj = new News($pdo_conn);
 
-            <li>
-              <div class="feature-card has-before has-after img-holder"
-                style="--width: 370; --height: 452; background-image: url('../assets/images/feature-2.jpg')">
-                <h3 class="h3">
-                  <a href="#" class="card-title">Join our <br> cabin crew</a>
-                </h3>
-                <a href="#" class="card-btn">
-                  <ion-icon name="arrow-forward" aria-hidden"true"></ion-icon>
-                </a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
+        $latest_news = [];
+        try {
+            $stmt = $pdo_conn->prepare("SELECT idNews, Nadpis, Text, Obrazok, created_at FROM news ORDER BY created_at DESC LIMIT 4");
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $latest_news[] = $row;
+            }
+        } catch (Exception $e) {
+            error_log("Error fetching latest news on index.php: " . $e->getMessage());
+            // Môžete tu pridať aj užívateľsky prívetivú správu, ak je to potrebné
+        }
+        ?>
+
+        <section class="section news" aria-label="news" id="news">
+            <div class="container">
+                <p class="section-subtitle">Najnovšie aktualizácie</p>
+                <h2 class="h2 section-title">Naše novinky</h2>
+
+                <?php if (!empty($latest_news)): ?>
+                    <ul class="grid-list">
+                        <?php foreach ($latest_news as $news_item): ?>
+                            <li>
+                                <div class="news-card">
+                                    <?php if (!empty($news_item['Obrazok'])): ?>
+                                        <figure class="card-banner img-holder" style="--width: 416; --height: 250;">
+                                            <img src="<?php echo htmlspecialchars($news_item['Obrazok']); ?>" width="416" height="250" loading="lazy"
+                                                 alt="<?php echo htmlspecialchars($news_item['Nadpis']); ?>" class="img-cover">
+                                        </figure>
+                                    <?php else: ?>
+                                        <figure class="card-banner img-holder" style="--width: 416; --height: 250;">
+                                            <img src="../assets/images/logo.svg" width="416" height="250" loading="lazy"
+                                                 alt="No image available" class="img-cover">
+                                        </figure>
+                                    <?php endif; ?>
+
+                                    <div class="card-content">
+                                        <h3 class="h3">
+                                            <a href="news.php?id=<?php echo htmlspecialchars($news_item['idNews']); ?>" class="card-title"><?php echo htmlspecialchars($news_item['Nadpis']); ?></a>
+                                        </h3>
+
+                                        <ul class="card-meta-list">
+                                            <li class="card-meta-item">
+                                                <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+
+                                                <time datetime="<?php echo date('Y-m-d', strtotime($news_item['created_at'])); ?>">
+                                                    <?php echo date('d M Y', strtotime($news_item['created_at'])); ?>
+                                                </time>
+                                            </li>
+                                        </ul>
+
+                                        <p class="card-text">
+                                            <?php echo htmlspecialchars(mb_strimwidth($news_item['Text'], 0, 150, "...")); // Zobrazíme len útržok textu ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <div class="text-center" style="margin-top: 50px;">
+                        <a href="news.php" class="btn btn-primary">Zobraziť všetky novinky</a>
+                    </div>
+                <?php else: ?>
+                    <p style="text-align: center; margin-top: 30px;">Momentálne nie sú k dispozícii žiadne novinky.</p>
+                <?php endif; ?>
+            </div>
+        </section>
 
       <section class="offer" aria-label="offer" id="offer">
         <div class="offer-content section" style="background-image: url('../assets/images/offer-bg.png')">
