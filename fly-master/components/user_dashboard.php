@@ -9,7 +9,8 @@ require_once '../module/Database.php';
 require_once '../classes/User.php';
 
 $user_id = $_SESSION['user_id'];
-$username = "Neznámy";
+$first_name = "Neznámy";
+$last_name = "Neznáme";
 $email = "Neznámy";
 $role = "Neznáma";
 
@@ -20,7 +21,8 @@ try {
     $user_obj->id = $user_id;
 
     if ($user_obj->readOne()) {
-        $username = $user_obj->username; // Používame first_name ako username z triedy User
+        $first_name = $user_obj->first_name;
+        $last_name = $user_obj->last_name;
         $email = $user_obj->email;
         $role = $user_obj->role;
     } else {
@@ -32,18 +34,17 @@ try {
 } catch (Exception $e) {
     $_SESSION['message'] = "Chyba pri načítaní profilu: " . $e->getMessage();
     $_SESSION['message_type'] = "error";
-    error_log("User dashboard data fetch error: " . $e->getMessage()); // Zostáva len error_log
+    error_log("User dashboard data fetch error: " . $e->getMessage());
 }
 ?>
 <?php include("head.php") ?>
 <?php include 'header.php'; ?>
 
     <title>Môj účet - Fly</title>
-    </head>
     <body>
 <main id="user-dashboard-page" class="main-content">
     <div class="dashboard-container">
-        <h2>Vitajte, <?php echo htmlspecialchars($username); ?>!</h2>
+        <h2>Vitajte, <?php echo htmlspecialchars($first_name); ?>!</h2>
         <?php
         if (isset($_SESSION['message'])) {
             $class = strpos($_SESSION['message_type'], 'success') !== false ? 'success-message' : 'error-message';
@@ -53,14 +54,12 @@ try {
         }
         ?>
         <p>Toto je váš osobný účet. Tu môžete spravovať svoje rezervácie a osobné údaje.</p>
-
         <h3>Vaše údaje:</h3>
-        <p><strong>Používateľské meno:</strong> <?php echo htmlspecialchars($username); ?></p>
+        <p><strong>Meno:</strong> <?php echo htmlspecialchars($first_name); ?></p>
+        <p><strong>Priezvisko:</strong> <?php echo htmlspecialchars($last_name); ?></p>
         <p><strong>E-mail:</strong> <?php echo htmlspecialchars($email); ?></p>
         <p><strong>Rola:</strong> <?php echo htmlspecialchars($role); ?></p>
-
         <p>Pridajte tu ďalší obsah pre užívateľský dashboard.</p>
-
         <a href="logout.php" class="btn-logout">Odhlásiť sa</a>
     </div>
 </main>

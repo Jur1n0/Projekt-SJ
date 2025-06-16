@@ -17,15 +17,13 @@ try {
 
     if ($stmt && $stmt->rowCount() > 0) {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            // Používame first_name ako username pre zobrazenie
-            $row['username'] = $row['first_name'];
             $users[] = $row;
         }
     }
 } catch (Exception $e) {
     $_SESSION['message'] = "Chyba pri načítaní používateľov: " . $e->getMessage();
     $_SESSION['message_type'] = "error";
-    error_log("Admin dashboard user fetch error: " . $e->getMessage()); // Zostáva len error_log
+    error_log("Admin dashboard user fetch error: " . $e->getMessage());
 }
 ?>
 <?php include("head.php") ?>
@@ -54,7 +52,8 @@ try {
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Používateľské meno</th>
+                <th>Meno</th>
+                <th>Priezvisko</th>
                 <th>E-mail</th>
                 <th>Rola</th>
                 <th>Akcie</th>
@@ -69,15 +68,17 @@ try {
                 <?php foreach ($users as $user): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($user['id']); ?></td>
-                        <td><?php echo htmlspecialchars($user['username']); ?></td>
+                        <td><?php echo htmlspecialchars($user['first_name']); ?></td>
+                        <td><?php echo htmlspecialchars($user['last_name']); ?></td>
                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                         <td><?php echo htmlspecialchars($user['role']); ?></td>
                         <td class="action-buttons">
-                            <button class="btn-edit" onclick="openEditModal(
+                            <button class="btn btn-edit" onclick="openEditModal(
                             <?php echo $user['id']; ?>,
-                                    '<?php echo htmlspecialchars($user['username'], ENT_QUOTES); ?>',
-                                    '<?php echo htmlspecialchars($user['email'], ENT_QUOTES); ?>',
-                                    '<?php echo htmlspecialchars($user['role'], ENT_QUOTES); ?>'
+                                    '<?php echo htmlspecialchars($user['first_name']); ?>',
+                                    '<?php echo htmlspecialchars($user['last_name']); ?>',
+                                    '<?php echo htmlspecialchars($user['email']); ?>',
+                                    '<?php echo htmlspecialchars($user['role']); ?>'
                                     )">Upraviť</button>
                             <form action="../process/process_delete_user.php" method="POST" style="display:inline-block;">
                                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['id']); ?>">
@@ -97,8 +98,12 @@ try {
                 <form id="editUserForm" class="modal-form" action="../process/process_update_user.php" method="POST">
                     <input type="hidden" id="editUserId" name="user_id">
                     <div class="form-group">
-                        <label for="editUsername">Používateľské meno:</label>
-                        <input type="text" id="editUsername" name="username" required>
+                        <label for="editFirstName">Meno:</label>
+                        <input type="text" id="editFirstName" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Priezvisko:</label>
+                        <input type="text" id="editLastName" name="last_name" required>
                     </div>
                     <div class="form-group">
                         <label for="editEmail">E-mail:</label>
@@ -112,14 +117,14 @@ try {
                 </form>
             </div>
         </div>
-
     </div>
 </main>
 
 <script>
-    function openEditModal(id, username, email, role) {
+    function openEditModal(id, firstName, lastName, email, role) {
         document.getElementById('editUserId').value = id;
-        document.getElementById('editUsername').value = username;
+        document.getElementById('editFirstName').value = firstName;
+        document.getElementById('editLastName').value = lastName;
         document.getElementById('editEmail').value = email;
         document.getElementById('editRole').value = role;
         document.getElementById('editUserModal').classList.add('show');

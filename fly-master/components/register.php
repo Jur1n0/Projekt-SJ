@@ -28,8 +28,12 @@ if (isset($_SESSION['user_id'])) {
         ?>
         <form action="../process/process_register.php" method="POST">
             <div class="form-group">
-                <label for="username">Používateľské meno:</label>
-                <input type="text" id="username" name="username" required placeholder="Vaše používateľské meno">
+                <label for="first_name">Meno:</label>
+                <input type="text" id="first_name" name="first_name" required placeholder="Vaše krstné meno">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Priezvisko:</label>
+                <input type="text" id="last_name" name="last_name" required placeholder="Vaše priezvisko">
             </div>
             <div class="form-group">
                 <label for="email">E-mail:</label>

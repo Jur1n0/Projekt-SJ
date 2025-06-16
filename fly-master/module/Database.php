@@ -1,14 +1,12 @@
 <?php
 class Database {
     private $host = 'localhost';
-    private $port = '3306'; // Skontrolujte si port MySQL. Predvolený je 3306.
-    private $username = 'root'; // Skontrolujte vaše DB používateľské meno
-    private $password = ''; // Skontrolujte VAŠE HESLO K DATABÁZE! Ak je prázdne, nechajte takto.
-    private $database_name = 'database'; // Názov vašej databázy
+    private $port = '3306';
+    private $username = 'root';
+    private $password = '';
+    private $database_name = 'database';
     private $charset = "utf8mb4";
-
     private $pdo;
-
     public function __construct(){
         try {
             $dsn = "mysql:host={$this->host};dbname={$this->database_name};port={$this->port};charset={$this->charset}";
@@ -20,7 +18,6 @@ class Database {
             die("Chyba pripojenia k databáze. Prosím, skúste to neskôr alebo kontaktujte administrátora.");
         }
     }
-
     public function getConnection(){
         return $this->pdo;
     }

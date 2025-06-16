@@ -12,8 +12,11 @@ require_once '../module/Database.php';
 require_once '../classes/User.php';
 
 $user_id = $_POST['user_id'] ?? '';
-$username = trim((string)($_POST['username'] ?? ''));
-$username = preg_replace('/[[:cntrl:]]/', '', $username);
+$first_name = trim((string)($_POST['first_name'] ?? ''));
+$first_name = preg_replace('/[[:cntrl:]]/', '', $first_name);
+
+$last_name = trim((string)($_POST['last_name'] ?? ''));
+$last_name = preg_replace('/[[:cntrl:]]/', '', $last_name);
 
 $email = trim((string)($_POST['email'] ?? ''));
 $email = preg_replace('/[[:cntrl:]]/', '', $email);
@@ -22,7 +25,7 @@ $role = trim((string)($_POST['role'] ?? ''));
 $role = preg_replace('/[[:cntrl:]]/', '', $role);
 
 
-if (empty($user_id) || empty($username) || empty($email) || empty($role)) {
+if (empty($user_id) || empty($first_name) || empty($last_name) || empty($email) || empty($role)) {
     $_SESSION['message'] = "Všetky polia sú povinné.";
     $_SESSION['message_type'] = "error";
     header("Location: ../components/admin_dashboard.php");
@@ -43,7 +46,8 @@ try {
     $user = new User($pdo_conn);
 
     $user->id = $user_id;
-    $user->username = $username;
+    $user->first_name = $first_name;
+    $user->last_name = $last_name;
     $user->email = $email;
     $user->role = strtolower($role);
 
@@ -66,7 +70,7 @@ try {
 } catch (Exception $e) {
     $_SESSION['message'] = "Nastala chyba: " . htmlspecialchars($e->getMessage());
     $_SESSION['message_type'] = "error";
-    error_log("Update user error: " . $e->getMessage()); // Zostáva len error_log
+    error_log("Update user error: " . $e->getMessage());
 }
 
 header("Location: ../components/admin_dashboard.php");

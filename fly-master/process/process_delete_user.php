@@ -20,7 +20,6 @@ if (empty($user_id)) {
     exit();
 }
 
-// Zabezpečenie, aby admin nemohol vymazať sám seba
 if ($user_id == $_SESSION['user_id']) {
     $_SESSION['message'] = "Nemôžete vymazať svoj vlastný admin účet.";
     $_SESSION['message_type'] = "error";
@@ -45,7 +44,7 @@ try {
 } catch (Exception $e) {
     $_SESSION['message'] = "Nastala chyba: " . htmlspecialchars($e->getMessage());
     $_SESSION['message_type'] = "error";
-    error_log("Delete user error: " . $e->getMessage()); // Zostáva len error_log
+    error_log("Delete user error: " . $e->getMessage());
 }
 
 header("Location: ../components/admin_dashboard.php");

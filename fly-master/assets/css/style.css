@@ -1,22 +1,3 @@
-/*-----------------------------------*\
-  #style.css
-\*-----------------------------------*/
-
-/**
- * copyright 2022 codewithsadee
- */
-
-/* Zvyšok CSS zostáva presne rovnaký ako v predchádzajúcej odpovedi */
-/* Namiesto opätovného vkladania 500+ riadkov sem vložte celý obsah z predošlej odpovede */
-/* Kľúčové je, že CSS súbor je nemenný, len cesty k nemu sa zmenia v HTML/PHP */
-
-/* Toto je len placeholder pre dlhý CSS obsah */
-/* SKOPÍRUJ CELÝ OBSAH style.css Z PREDCHÁDZAJÚCEJ ODPOVEDE A VLOŽ HO SEM! */
-
-/*-----------------------------------*\
-  #CUSTOM PROPERTY
-\*-----------------------------------*/
-
 :root {
   --british-racing-green: hsl(144, 45%, 19%);
   --phthalo-green-1: hsl(143, 54%, 9%);
@@ -1353,7 +1334,7 @@ body.active { overflow: hidden; }
   color: var(--phthalo-green-1);
 }
 
-/* ADMIN DASHBOARD - špecifické rozloženie tlačidla logout */
+/* ADMIN DASHBOARD  */
 .admin-dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -1422,7 +1403,7 @@ td {
 }
 
 
-/* MODAL (pre úpravu používateľa napríklad) */
+/* MODAL */
 .modal {
   position: fixed;
   top: 0;
@@ -1561,23 +1542,21 @@ td {
   }
 }
 
-/* --- Základné štýly tlačidiel z tvojej šablóny (ak už máš, len ich skontroluj) --- */
-/* These are already largely defined above with .btn, .btn-primary, .btn-secondary */
-/* Re-defining them here for clarity based on your comments, ensuring they use your theme variables */
+
 .btn {
   display: inline-block;
   color: var(--white);
-  font-size: var(--fs-8); /* Adjusted to match the .btn definition at the top */
-  font-weight: var(--fw-700); /* Adjusted to match the .btn definition at the top */
-  padding: 20px 55px; /* Adjusted to match the .btn definition at the top */
-  border-radius: var(--radius-pill); /* Adjusted to match the .btn definition at the top */
+  font-size: var(--fs-8);
+  font-weight: var(--fw-700);
+  padding: 20px 55px;
+  border-radius: var(--radius-pill);
   transition: var(--transition-1);
   cursor: pointer;
   text-align: center;
   border: none;
   text-decoration: none;
-  text-transform: uppercase; /* Ensure consistency with existing .btn */
-  letter-spacing: 1px; /* Ensure consistency with existing .btn */
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .btn-primary {
@@ -1596,19 +1575,16 @@ td {
 }
 
 .btn-secondary:is(:hover, :focus) {
-  background-color: var(--satin-sheen-gold); /* Changed to satin-sheen-gold for consistency with hero buttons */
-  color: var(--white); /* Changed to white for consistency with hero buttons */
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
 }
 
-/* --- Špecifické štýly pre tlačidlá na registration_success.php --- */
-/* Ak chceš presne tie tlačidlá, ktoré máš na hlavnej stránke (Book Now/Read More) */
 .btn-wrapper a.btn {
   min-width: 150px;
   margin: 0 10px;
-  padding: 15px 30px; /* Adjusted padding slightly for a more compact look for these specific buttons */
+  padding: 15px 30px;
 }
 
-/* Doplnkové štýly pre centrum a zarovnanie */
 #registration-success-page .form-container {
   display: flex;
   flex-direction: column;
@@ -1618,7 +1594,7 @@ td {
 }
 
 #registration-success-page .form-container h2 {
-  color: var(--satin-sheen-gold); /* Used --satin-sheen-gold for consistency */
+  color: var(--satin-sheen-gold);
   margin-bottom: 20px;
 }
 

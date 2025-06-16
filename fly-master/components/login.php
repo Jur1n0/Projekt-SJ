@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Zabezpečenie presmerovania, ak je používateľ už prihlásený
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] === 'admin') {
         header("Location: admin_dashboard.php");
@@ -20,7 +19,6 @@ if (isset($_SESSION['user_id'])) {
     <div class="form-container">
         <h2>Prihlásenie</h2>
         <?php
-        // Zobraz správy (napr. chybné prihlásenie, úspešná registrácia)
         if (isset($_SESSION['message'])) {
             $class = strpos($_SESSION['message_type'], 'success') !== false ? 'success-message' : 'error-message';
             echo "<p class='message {$class}'>" . htmlspecialchars($_SESSION['message']) . "</p>";

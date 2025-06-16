@@ -9,12 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once '../module/Database.php';
 require_once '../classes/User.php';
 
-// Získanie a OČISTENIE dát
 $email = trim((string)($_POST['email'] ?? ''));
-$email = preg_replace('/[[:cntrl:]]/', '', $email); // Odstráni riadiace znaky
+$email = preg_replace('/[[:cntrl:]]/', '', $email);
 
 $password = trim((string)($_POST['password'] ?? ''));
-$password = preg_replace('/[[:cntrl:]]/', '', $password); // Odstráni riadiace znaky
+$password = preg_replace('/[[:cntrl:]]/', '', $password);
 
 if (empty($email) || empty($password)) {
     $_SESSION['message'] = "Prosím, vyplňte obe polia (e-mail a heslo).";
@@ -35,7 +34,7 @@ try {
         $_SESSION['user_id'] = $user->id;
         $_SESSION['email'] = $user->email;
         $_SESSION['role'] = $user->role;
-        $_SESSION['username'] = $user->username;
+        $_SESSION['full_name'] = $user->first_name . ' ' . $user->last_name;
 
         $_SESSION['message'] = "Prihlásenie úspešné!";
         $_SESSION['message_type'] = "success";
@@ -55,7 +54,7 @@ try {
 } catch (Exception $e) {
     $_SESSION['message'] = "Nastala chyba pri prihlásení. Skúste to prosím neskôr.";
     $_SESSION['message_type'] = "error";
-    error_log("Login error: " . $e->getMessage()); // Zostáva len error_log
+    error_log("Login error: " . $e->getMessage());
     header("Location: ../components/login.php");
     exit();
 }

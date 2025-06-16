@@ -9,9 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once '../module/Database.php';
 require_once '../classes/User.php';
 
-// Získanie a OČISTENIE dát
-$username = trim((string)($_POST['username'] ?? ''));
-$username = preg_replace('/[[:cntrl:]]/', '', $username);
+$first_name = trim((string)($_POST['first_name'] ?? ''));
+$first_name = preg_replace('/[[:cntrl:]]/', '', $first_name);
+
+$last_name = trim((string)($_POST['last_name'] ?? ''));
+$last_name = preg_replace('/[[:cntrl:]]/', '', $last_name);
 
 $email = trim((string)($_POST['email'] ?? ''));
 $email = preg_replace('/[[:cntrl:]]/', '', $email);
@@ -24,8 +26,7 @@ $confirm_password = preg_replace('/[[:cntrl:]]/', '', $confirm_password);
 
 $gdpr_consent = isset($_POST['gdpr_consent']) ? 1 : 0;
 
-// Validácia vstupných dát
-if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
+if (empty($first_name) || empty($last_name) || empty($email) || empty($password) || empty($confirm_password)) {
     $_SESSION['message'] = "Prosím, vyplňte všetky povinné polia.";
     $_SESSION['message_type'] = "error";
     header("Location: ../components/register.php");
@@ -65,7 +66,8 @@ try {
     $pdo_conn = $db->getConnection();
     $user = new User($pdo_conn);
 
-    $user->username = $username;
+    $user->first_name = $first_name;
+    $user->last_name = $last_name;
     $user->email = $email;
     $user->password = $password;
     $user->gdpr_consent = $gdpr_consent;
@@ -85,7 +87,7 @@ try {
 } catch (Exception $e) {
     $_SESSION['message'] = "Chyba: " . htmlspecialchars($e->getMessage());
     $_SESSION['message_type'] = "error";
-    error_log("Registration error: " . $e->getMessage()); // Zostáva len error_log
+    error_log("Registration error: " . $e->getMessage());
     header("Location: ../components/register.php");
     exit();
 }
