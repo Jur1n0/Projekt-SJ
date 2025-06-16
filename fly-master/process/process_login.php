@@ -1,5 +1,4 @@
 <?php
-// process/process_login.php
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -10,8 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once '../module/Database.php';
 require_once '../classes/User.php';
 
-$email = trim($_POST['email'] ?? '');
-$password = $_POST['password'] ?? '';
+// Získanie a OČISTENIE dát
+$email = trim((string)($_POST['email'] ?? ''));
+$email = preg_replace('/[[:cntrl:]]/', '', $email); // Odstráni riadiace znaky
+
+$password = trim((string)($_POST['password'] ?? ''));
+$password = preg_replace('/[[:cntrl:]]/', '', $password); // Odstráni riadiace znaky
 
 if (empty($email) || empty($password)) {
     $_SESSION['message'] = "Prosím, vyplňte obe polia (e-mail a heslo).";
@@ -29,13 +32,10 @@ try {
     $user->password = $password;
 
     if ($user->login()) {
-        // Používateľ nájdený a heslo overené v tabuľke 'users'
-        // Session premenné sú už nastavené v $user objekte po úspešnom prihlásení v User.php
         $_SESSION['user_id'] = $user->id;
         $_SESSION['email'] = $user->email;
-        $_SESSION['role'] = $user->role; // Získa rolu z databázy (admin/user)
-        $_SESSION['first_name'] = $user->first_name;
-        $_SESSION['last_name'] = $user->last_name;
+        $_SESSION['role'] = $user->role;
+        $_SESSION['username'] = $user->username;
 
         $_SESSION['message'] = "Prihlásenie úspešné!";
         $_SESSION['message_type'] = "success";
@@ -47,16 +47,15 @@ try {
         }
         exit();
     } else {
-        // Prihlásenie zlyhalo
         $_SESSION['message'] = "Nesprávny e-mail alebo heslo.";
         $_SESSION['message_type'] = "error";
         header("Location: ../components/login.php");
         exit();
     }
 } catch (Exception $e) {
-    $_SESSION['message'] = "Nastala chyba pri prihlásení: " . $e->getMessage();
+    $_SESSION['message'] = "Nastala chyba pri prihlásení. Skúste to prosím neskôr.";
     $_SESSION['message_type'] = "error";
-    error_log("Login error: " . $e->getMessage());
+    error_log("Login error: " . $e->getMessage()); // Zostáva len error_log
     header("Location: ../components/login.php");
     exit();
 }

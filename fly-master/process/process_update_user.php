@@ -1,8 +1,6 @@
 <?php
-// process/process_update_user.php
 session_start();
 
-// Zabezpečenie: Iba prihlásení admini môžu pristupovať k tomuto skriptu
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin' || $_SERVER['REQUEST_METHOD'] !== 'POST') {
     $_SESSION['message'] = "Nemáte oprávnenie na vykonanie tejto operácie.";
     $_SESSION['message_type'] = "error";
@@ -14,22 +12,25 @@ require_once '../module/Database.php';
 require_once '../classes/User.php';
 
 $user_id = $_POST['user_id'] ?? '';
-$first_name = trim($_POST['first_name'] ?? '');
-$last_name = trim($_POST['last_name'] ?? '');
-$email = trim($_POST['email'] ?? '');
-$role = trim($_POST['role'] ?? ''); // Získame rolu z formulára
+$username = trim((string)($_POST['username'] ?? ''));
+$username = preg_replace('/[[:cntrl:]]/', '', $username);
 
-// Základná validácia
-if (empty($user_id) || empty($first_name) || empty($last_name) || empty($email) || empty($role)) {
+$email = trim((string)($_POST['email'] ?? ''));
+$email = preg_replace('/[[:cntrl:]]/', '', $email);
+
+$role = trim((string)($_POST['role'] ?? ''));
+$role = preg_replace('/[[:cntrl:]]/', '', $role);
+
+
+if (empty($user_id) || empty($username) || empty($email) || empty($role)) {
     $_SESSION['message'] = "Všetky polia sú povinné.";
     $_SESSION['message_type'] = "error";
     header("Location: ../components/admin_dashboard.php");
     exit();
 }
 
-// Voliteľná validácia roly (odporúčané)
-$allowed_roles = ['user', 'admin']; // Definujte platné roly
-if (!in_array(strtolower($role), $allowed_roles)) { // Použite strtolower pre porovnanie
+$allowed_roles = ['user', 'admin'];
+if (!in_array(strtolower($role), $allowed_roles)) {
     $_SESSION['message'] = "Neplatná rola. Povolené roly sú: " . implode(', ', $allowed_roles) . ".";
     $_SESSION['message_type'] = "error";
     header("Location: ../components/admin_dashboard.php");
@@ -42,38 +43,30 @@ try {
     $user = new User($pdo_conn);
 
     $user->id = $user_id;
-    $user->first_name = $first_name;
-    $user->last_name = $last_name;
+    $user->username = $username;
     $user->email = $email;
-    $user->role = strtolower($role); // Uložte rolu malými písmenami do DB
+    $user->role = strtolower($role);
 
     $success_message = "Používateľ bol úspešne aktualizovaný.";
-    $error_message = "Chyba pri aktualizácii používateľa. Možno e-mail už existuje.";
+    $error_message = "Chyba pri aktualizácii používateľa. Možno e-mail už existuje alebo používateľské meno.";
 
-    // Pokus o aktualizáciu základných dát (meno, priezvisko, email)
-    // Funkcia update() bola upravená tak, aby spracovala email unikátnosť
     if ($user->update()) {
-        // Po úspešnej aktualizácii mena, priezviska a emailu, aktualizujeme aj rolu
-        // Použijeme metódu updateRole() z User.php
         if ($user->updateRole()) {
             $_SESSION['message'] = $success_message . " Rola bola tiež aktualizovaná.";
             $_SESSION['message_type'] = "success";
         } else {
-            // Ak základné dáta prešli, ale rola zlyhala
             $_SESSION['message'] = $success_message . " Avšak, rolu sa nepodarilo zmeniť.";
             $_SESSION['message_type'] = "warning";
         }
     } else {
-        // Ak zlyhala aktualizácia základných dát (napr. duplicitný email)
         $_SESSION['message'] = $error_message;
         $_SESSION['message_type'] = "error";
     }
 
 } catch (Exception $e) {
-    // Všeobecná chyba, napr. problémy s databázou
-    $_SESSION['message'] = "Nastala chyba: " . $e->getMessage();
+    $_SESSION['message'] = "Nastala chyba: " . htmlspecialchars($e->getMessage());
     $_SESSION['message_type'] = "error";
-    error_log("Update user error: " . $e->getMessage()); // Zalogovať pre debugging
+    error_log("Update user error: " . $e->getMessage()); // Zostáva len error_log
 }
 
 header("Location: ../components/admin_dashboard.php");

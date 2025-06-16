@@ -1,117 +1,91 @@
 <?php
 session_start();
-require_once __DIR__ . '/../module/Database.php'; // Uprav cestu, ak je iná
 
-// Skontroluj, či bol formulár odoslaný metódou POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: ../components/register.php");
+    exit();
+}
 
-    // Získaj údaje z formulára
-    $first_name = trim($_POST['first_name']);
-    $last_name = trim($_POST['last_name']);// Predpokladám, že 'username' bude použité ako first_name
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    $password_confirm = $_POST['password_confirm'];
-    $gdpr_consent = isset($_POST['gdpr']) ? 1 : 0; // 1 ak je zaškrtnuté, 0 ak nie
+require_once '../module/Database.php';
+require_once '../classes/User.php';
 
-    // Inicializácia premenných pre chyby
-    $errors = [];
+// Získanie a OČISTENIE dát
+$username = trim((string)($_POST['username'] ?? ''));
+$username = preg_replace('/[[:cntrl:]]/', '', $username);
 
-    // Validácia dát
-    if (empty($first_name)) {
-        $errors[] = "Meno je povinné.";
-    }
-    if (empty($last_name)) {
-        $errors[] = "Priezvisko je povinné.";
-    }
-    if (empty($email)) {
-        $errors[] = "E-mail je povinný.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Zadajte platný e-mail.";
-    }
-    if (empty($password)) {
-        $errors[] = "Heslo je povinné.";
-    } elseif (strlen($password) < 6) { // Minimálna dĺžka hesla
-        $errors[] = "Heslo musí mať aspoň 6 znakov.";
-    }
-    if ($password !== $password_confirm) {
-        $errors[] = "Heslá sa nezhodujú.";
-    }
-    if ($gdpr_consent == 0) {
-        $errors[] = "Musíte súhlasiť so spracovaním osobných údajov.";
-    }
+$email = trim((string)($_POST['email'] ?? ''));
+$email = preg_replace('/[[:cntrl:]]/', '', $email);
 
-    // Ak sú chyby, presmeruj späť na registračnú stránku s chybovými správami
-    if (!empty($errors)) {
-        $_SESSION['message'] = implode("<br>", $errors);
-        $_SESSION['message_type'] = 'error';
+$password = trim((string)($_POST['password'] ?? ''));
+$password = preg_replace('/[[:cntrl:]]/', '', $password);
+
+$confirm_password = trim((string)($_POST['confirm_password'] ?? ''));
+$confirm_password = preg_replace('/[[:cntrl:]]/', '', $confirm_password);
+
+$gdpr_consent = isset($_POST['gdpr_consent']) ? 1 : 0;
+
+// Validácia vstupných dát
+if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
+    $_SESSION['message'] = "Prosím, vyplňte všetky povinné polia.";
+    $_SESSION['message_type'] = "error";
+    header("Location: ../components/register.php");
+    exit();
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $_SESSION['message'] = "Zadajte platnú e-mailovú adresu.";
+    $_SESSION['message_type'] = "error";
+    header("Location: ../components/register.php");
+    exit();
+}
+
+if ($password !== $confirm_password) {
+    $_SESSION['message'] = "Heslá sa nezhodujú.";
+    $_SESSION['message_type'] = "error";
+    header("Location: ../components/register.php");
+    exit();
+}
+
+if (strlen($password) < 6) {
+    $_SESSION['message'] = "Heslo musí mať aspoň 6 znakov.";
+    $_SESSION['message_type'] = "error";
+    header("Location: ../components/register.php");
+    exit();
+}
+
+if (!$gdpr_consent) {
+    $_SESSION['message'] = "Musíte súhlasiť so spracovaním osobných údajov.";
+    $_SESSION['message_type'] = "error";
+    header("Location: ../components/register.php");
+    exit();
+}
+
+try {
+    $db = new Database();
+    $pdo_conn = $db->getConnection();
+    $user = new User($pdo_conn);
+
+    $user->username = $username;
+    $user->email = $email;
+    $user->password = $password;
+    $user->gdpr_consent = $gdpr_consent;
+
+    if ($user->register()) {
+        $_SESSION['message'] = "Registrácia úspešná! Teraz sa môžete prihlásiť.";
+        $_SESSION['message_type'] = "success";
+        header("Location: ../components/login.php");
+        exit();
+    } else {
+        $_SESSION['message'] = "Chyba pri registrácii. Skúste to prosím znova.";
+        $_SESSION['message_type'] = "error";
         header("Location: ../components/register.php");
         exit();
     }
 
-    // Pokus o pripojenie k databáze
-    try {
-        $database = new Database();
-        $conn = $database->getConnection();
-
-        // Skontroluj, či e-mail už existuje v databáze
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = :email LIMIT 1");
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            $_SESSION['message'] = "Používateľ s týmto e-mailom už existuje.";
-            $_SESSION['message_type'] = 'error';
-            header("Location: ../components/register.php");
-            exit();
-        }
-
-        // Hashovanie hesla (dôležité pre bezpečnosť!)
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        // Priprav vloženie dát do tabuľky 'users'
-        // 'last_name' a 'role' sú pevne dané alebo ich musíš pridať do formulára
-        // V tomto príklade nastavím 'last_name' na prázdny reťazec a 'role' na 'user'.
-        // Ak chceš 'last_name' z formulára, musíš pridať input pole do register.php
-        $last_name = ''; // Zatiaľ prázdne, ak nemáš input pre last_name
-        $role = 'user'; // Predvolená rola pre nového používateľa
-
-        $stmt = $conn->prepare(
-            "INSERT INTO users (first_name, last_name, email, password, gdpr_consent, role)
-             VALUES (:first_name, :last_name, :email, :password, :gdpr_consent, :role)"
-        );
-
-        $stmt->bindParam(':first_name', $first_name);
-        $stmt->bindParam(':last_name', $last_name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $hashed_password);
-        $stmt->bindParam(':gdpr_consent', $gdpr_consent, PDO::PARAM_INT);
-        $stmt->bindParam(':role', $role);
-
-        // Vykonanie príkazu
-        if ($stmt->execute()) {
-            // Registrácia úspešná, presmeruj na potvrdzujúcu stránku
-            $_SESSION['registration_success'] = true;
-            $_SESSION['registered_email'] = $email; // Ulož e-mail pre zobrazenie na potvrdzujúcej stránke
-            header("Location: ../components/registration_success.php");
-            exit();
-        } else {
-            // Chyba pri vkladaní do DB
-            $_SESSION['message'] = "Nastala chyba pri registrácii. Skúste to znova neskôr.";
-            $_SESSION['message_type'] = 'error';
-            header("Location: ../components/register.php");
-            exit();
-        }
-
-    } catch (PDOException $e) {
-        // Chyba pripojenia alebo vykonávania databázového príkazu
-        $_SESSION['message'] = "Chyba databázy: " . $e->getMessage();
-        $_SESSION['message_type'] = 'error';
-        header("Location: ../components/register.php");
-        exit();
-    }
-
-} else {
-    // Ak nebol formulár odoslaný metódou POST, presmeruj na registračnú stránku
+} catch (Exception $e) {
+    $_SESSION['message'] = "Chyba: " . htmlspecialchars($e->getMessage());
+    $_SESSION['message_type'] = "error";
+    error_log("Registration error: " . $e->getMessage()); // Zostáva len error_log
     header("Location: ../components/register.php");
     exit();
 }

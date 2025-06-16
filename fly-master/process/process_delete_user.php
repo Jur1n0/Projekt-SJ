@@ -1,8 +1,6 @@
 <?php
-// process/process_delete_user.php
 session_start();
 
-// Zabezpečenie: Iba prihlásení admini môžu pristupovať k tomuto skriptu
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin' || $_SERVER['REQUEST_METHOD'] !== 'POST') {
     $_SESSION['message'] = "Nemáte oprávnenie na vykonanie tejto operácie.";
     $_SESSION['message_type'] = "error";
@@ -22,7 +20,7 @@ if (empty($user_id)) {
     exit();
 }
 
-// Dôležité zabezpečenie: Admin nemôže vymazať sám seba!
+// Zabezpečenie, aby admin nemohol vymazať sám seba
 if ($user_id == $_SESSION['user_id']) {
     $_SESSION['message'] = "Nemôžete vymazať svoj vlastný admin účet.";
     $_SESSION['message_type'] = "error";
@@ -45,9 +43,9 @@ try {
         $_SESSION['message_type'] = "error";
     }
 } catch (Exception $e) {
-    $_SESSION['message'] = "Nastala chyba: " . $e->getMessage();
+    $_SESSION['message'] = "Nastala chyba: " . htmlspecialchars($e->getMessage());
     $_SESSION['message_type'] = "error";
-    error_log("Delete user error: " . $e->getMessage()); // Zalogovať pre debugging
+    error_log("Delete user error: " . $e->getMessage()); // Zostáva len error_log
 }
 
 header("Location: ../components/admin_dashboard.php");
