@@ -2105,3 +2105,135 @@ table td.actions {
 .admin-container {
   background-color: var(--phthalo-green-2);
 }
+
+/* Modálne okno */
+.modal {
+  display: none; /* Skryté predvolene */
+  position: fixed; /* Zostať na mieste */
+  z-index: 1000; /* Sedieť na vrchu */
+  left: 0;
+  top: 0;
+  width: 100%; /* Plná šírka */
+  height: 100%; /* Plná výška */
+  overflow: auto; /* Povoliť posúvanie, ak je potrebné */
+  background-color: rgba(0,0,0,0.4); /* Čierna s transparentnosťou */
+  padding-top: 60px; /* Poloha okna */
+  backdrop-filter: blur(5px); /* Rozmazané pozadie */
+}
+
+.modal.show {
+  display: block; /* Zobraziť, keď má triedu 'show' */
+}
+
+.modal-content {
+  background-color: var(--phthalo-green-2); /* Prispôsobte farbe vášho pozadia */
+  margin: 5% auto; /* 5% od vrchu a centrovať */
+  padding: 30px;
+  border: 1px solid var(--satin-sheen-gold);
+  width: 80%; /* Širší obsah */
+  max-width: 700px; /* Maximálna šírka */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: relative; /* Pre umiestnenie tlačidla zatvorenia */
+  color: var(--text-color);
+}
+
+.modal-content h2 {
+  color: var(--text-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal-content h3 {
+  color: var(--text-color);
+  margin-top: 25px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--satin-sheen-gold);
+  padding-bottom: 10px;
+}
+
+.modal-content .form-group {
+  margin-bottom: 15px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content input[type="date"],
+.modal-content select {
+  width: calc(100% - 20px); /* Odpočítame padding */
+  padding: 10px;
+  border: 1px solid var(--satin-sheen-gold);
+  border-radius: 5px;
+  background-color: var(--phthalo-green-1);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.modal-content button.btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content .btn-primary {
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
+  border: none;
+}
+
+.modal-content .btn-primary:hover {
+  background-color: var(--white);
+  color: var(--satin-sheen-gold);
+}
+
+.modal-content .btn-secondary {
+  background-color: var(--white);
+  color: var(--satin-sheen-gold);
+  border: none;
+  margin-left: 10px;
+}
+
+.modal-content .btn-secondary:hover {
+  background-color: var(--satin-sheen-gold);
+  color: var(--white);
+}
+
+
+.close-button {
+  color: var(--text-color);
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #f00;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Pridaj nový štýl pre .filter-section */
+.filter-section {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: right; /* Zarovná tlačidlo doprava */
+}
+
+.filter-section .btn {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+}

@@ -166,119 +166,85 @@
             </div>
         </section>
 
-        <section class="offer" aria-label="offer" id="offer">
-            <div class="offer-content section" style="background-image: url('../assets/images/offer-bg.png')">
-                <div class="container">
-                    <p class="section-subtitle">Special Offer</p>
-                    <h2 class="h2 section-title">The best service for business people who appreciate time</h2>
-                    <p class="section-text">
-                        Non augue egestas, commodo velit eget, vestibulum tellus. Curabitur vulputate justo elit, at elementum
-                        pulvinar.
-                        Pellentesque habitant morbi tristique.
-                    </p>
-                    <a href="#" class="btn btn-primary">Discover More</a>
-                </div>
-            </div>
-            <div class="offer-banner has-bg-image" style="background-image: url('../assets/images/offer-banner.jpg')"></div>
-        </section>
+        <?php
+        require_once '../module/Database.php';
+        require_once '../classes/Flight.php';
 
-        <section class="section flight" aria-label="privet flight">
+        $popular_flights = [];
+        try {
+            $db = new Database();
+            $pdo_conn = $db->getConnection();
+            $flight_obj = new Flight($pdo_conn);
+            $stmt_popular = $flight_obj->readPopularFlights(4); // Načíta 4 najpopulárnejšie lety
+
+            if ($stmt_popular && $stmt_popular->rowCount() > 0) {
+                while($row = $stmt_popular->fetch(PDO::FETCH_ASSOC)) {
+                    $popular_flights[] = $row;
+                }
+            }
+        } catch (Exception $e) {
+            error_log("Error fetching popular flights: " . $e->getMessage());
+            // Môžeš nastaviť session message, ak chceš, aby používateľ videl chybu
+            // $_SESSION['message'] = "Chyba pri načítaní populárnych letov.";
+            // $_SESSION['message_type'] = "error";
+        }
+        ?>
+
+        <section class="section offer" aria-label="offer" id="offer">
             <div class="container">
-                <ul class="grid-list">
-                    <li>
-                        <div class="flight-content">
-                            <p class="section-subtitle">Private Flights</p>
-                            <h2 class="h2 section-title">Browse legs of our charters</h2>
-                            <p class="section-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum, lacus non faucibus
-                                congue, lectus quam
-                                viverra nulla, quis egestas neque sapien ac magna.
-                            </p>
-                        </div>
-                    </li>
+                <p class="section-subtitle">Najlepšie ponuky</p>
+                <h2 class="h2 section-title">Najpopulárnejšie lety pre vás</h2>
 
-                    <li>
-                        <div class="flight-card">
-                            <h3 class="card-title">
-                                New York
-                                <ion-icon name="airplane" aria-hidden="true"></ion-icon>
-                                Moscow
-                            </h3>
-                            <div class="card-banner">
-                                <img src="../assets/images/flight-1.png" width="263" height="84" loading="lazy"
-                                     alt="new york to moscow flight airplane" class="w-100">
-                            </div>
-                            <ul class="card-list">
-                                <li class="card-item">
-                                    <span class="span">Date:</span>
-                                    Tuesday, Jul 6, 2022
-                                </li>
-
-                                <li class="card-item">
-                                    <span class="span">Departure:</span>
-                                    11:25 pm
-                                </li>
-
-                                <li class="card-item">
-                                    <span class="span">Arrival:</span>
-                                    02:25 am
-                                </li>
-
-                                <li class="card-item">
-                                    <span class="span">Starting From:</span>
-                                    $2786
-                                </li>
-
-                                <li class="card-item">
-                                    <span class="span">Person:</span>
-                                    Adult 3
-                                </li>
-                            </ul>
-                            <a href="#" class="btn btn-primary">Book Now</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="flight-card">
-                            <h3 class="card-title">
-                                New York
-                                <ion-icon name="airplane" aria-hidden="true"></ion-icon>
-                                Moscow
-                            </h3>
-                            <div class="card-banner">
-                                <img src="../assets/images/flight-1.png" width="263" height="84" loading="lazy"
-                                     alt="new york to moscow flight airplane" class="w-100">
-                            </div>
-                            <ul class="card-list">
-                                <li class="card-item">
-                                    <span class="span">Date:</span>
-                                    Tuesday, Jul 6, 2022
-                                </li>
-
-                                <li class="card-item">
-                                    <span class="span">Departure:</span>
-                                    11:25 pm
-                                </li>
-
-                                <li class="card-item">
-                                    <span class="span">Arrival:</span>
-                                    02:25 am
-                                </li>
-
-                                <li class="card-item">
-                                    <span class="span">Starting From:</span>
-                                    $2786
-                                </li>
-
-                                <li class="card-item">
-                                    <span class="span">Person:</span>
-                                    Adult 3
-                                </li>
-                            </ul>
-                            <a href="#" class="btn btn-primary">Book Now</a>
-                        </div>
-                    </li>
-                </ul>
+                <?php if (!empty($popular_flights)): ?>
+                    <ul class="grid-list">
+                        <?php foreach ($popular_flights as $flight): ?>
+                            <li>
+                                <div class="offer-card">
+                                    <figure class="card-banner img-holder" style="--width: 384; --height: 250;">
+                                        <img src="<?php echo htmlspecialchars($flight['obrazok'] ?? '../assets/images/default-flight.jpg'); ?>"
+                                             width="384" height="250" loading="lazy"
+                                             alt="<?php echo htmlspecialchars($flight['miesto_odletu']); ?> do <?php echo htmlspecialchars($flight['miesto_priletu']); ?>"
+                                             class="img-cover">
+                                    </figure>
+                                    <div class="card-content">
+                                        <h3 class="h3 card-title">
+                                            <a href="flight_detail.php?id=<?php echo htmlspecialchars($flight['id']); ?>">
+                                                <?php echo htmlspecialchars($flight['miesto_odletu']); ?> &rarr; <?php echo htmlspecialchars($flight['miesto_priletu']); ?>
+                                            </a>
+                                        </h3>
+                                        <p class="card-text">
+                                            Lietadlo: <?php echo htmlspecialchars($flight['lietadlo']); ?><br>
+                                            Odlet: <?php echo date('d.m.Y H:i', strtotime($flight['datum_cas_odletu'])); ?>
+                                        </p>
+                                        <ul class="card-meta-list">
+                                            <li class="card-meta-item">
+                                                <ion-icon name="pricetag-outline" aria-hidden="true"></ion-icon>
+                                                <span class="span"><?php echo number_format($flight['cena'], 2, ',', ' '); ?> €</span>
+                                            </li>
+                                            <li class="card-meta-item">
+                                                <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                                                <span class="span">
+                                            <?php echo htmlspecialchars($flight['dlzka_letu_hodiny']); ?>h
+                                            <?php echo htmlspecialchars($flight['dlzka_letu_minuty']); ?>m
+                                        </span>
+                                            </li>
+                                            <li class="card-meta-item">
+                                                <ion-icon name="people-outline" aria-hidden="true"></ion-icon>
+                                                <span class="span">Kapacita: <?php echo htmlspecialchars($flight['kapacita_lietadla']); ?></span>
+                                            </li>
+                                        </ul>
+                                        <a href="flight_detail.php?id=<?php echo htmlspecialchars($flight['id']); ?>" class="btn btn-primary">Rezervovať</a>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <p>Momentálne nie sú dostupné žiadne populárne lety.</p>
+                <?php endif; ?>
+                <div class="text-center" style="margin-top: 30px;">
+                    <a href="flights.php" class="btn btn-secondary">Zobraziť všetky lety</a>
+                </div>
             </div>
         </section>
 

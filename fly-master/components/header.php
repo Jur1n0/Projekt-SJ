@@ -1,6 +1,7 @@
 <?php
 ?>
 <header class="header" data-header>
+
     <link rel="stylesheet" href="../assets/css/style.css">
     <div class="container">
         <a href="index.php" class="logo">
@@ -52,9 +53,9 @@
                 <?php
             }
             ?>
-            <button class="header-action-btn" aria-label="cart">
+            <a class="header-action-btn" aria-label="cart" href="cart.php">
                 <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
-            </button
+            </a>
             <button class="header-action-btn nav-open-btn" aria-label="menu" data-nav-toggler>
                 <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
             </button>
