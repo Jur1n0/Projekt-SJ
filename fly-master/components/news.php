@@ -11,7 +11,6 @@ $all_news = [];
 $single_news = null;
 $display_single_news = false;
 
-// Kontrola, či bol odoslaný parameter id novinky
 if (isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
     $news_id = $_GET['id'];
     $news_obj->idNews = $news_id;
@@ -30,8 +29,7 @@ if (isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
     }
 }
 
-// Načítanie všetkých noviniek pre archív
-if (!$display_single_news) { // Načítať všetky novinky len ak nezobrazujeme jednu konkrétnu
+if (!$display_single_news) {
     try {
         $stmt_all_news = $news_obj->readAll();
         if ($stmt_all_news) {
@@ -117,12 +115,8 @@ if (!$display_single_news) { // Načítať všetky novinky len ak nezobrazujeme 
     </article>
 </main>
 
+</body>
 <?php include("footer.php") ?>
-
-<script src="../assets/js/script.js" defer></script>
-
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-</body>
 </html>

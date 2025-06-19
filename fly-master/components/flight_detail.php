@@ -9,7 +9,6 @@ $flight_details = null;
 $message = '';
 $message_type = '';
 
-// Spracovanie správy zo session (napr. po pridaní do košíka)
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
     $message_type = $_SESSION['message_type'];
@@ -65,7 +64,7 @@ try {
 <body>
 
 <?php include("header.php") ?>
-
+<script src="../assets/js/script.js"></script>
 <main>
     <article>
         <section class="section flight-detail-page" aria-label="flight detail">
@@ -83,7 +82,7 @@ try {
                     <div class="flight-detail-card">
                         <?php if (!empty($flight_details['obrazok'])): ?>
                             <figure class="card-banner img-holder" style="--width: 700; --height: 400;">
-                                <img src="../assets/images/flights/<?php echo htmlspecialchars($flight_details['obrazok']); ?>"
+                                <img src="../images/<?php echo htmlspecialchars($flight_details['obrazok']); ?>"
                                      width="700" height="400" loading="lazy"
                                      alt="<?php echo htmlspecialchars($flight_details['lietadlo']); ?>"
                                      class="img-cover">
@@ -123,10 +122,8 @@ try {
         </section>
     </article>
 </main>
-
-<?php include("footer.php") ?>
-
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+<?php include("footer.php") ?>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>

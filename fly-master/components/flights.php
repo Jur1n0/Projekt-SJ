@@ -3,10 +3,8 @@ session_start();
 require_once '../module/Database.php';
 require_once '../classes/Flight.php';
 require_once '../classes/Cart.php';
-require_once '../module/FlightFilter.php'; // Zahrnieme FlightFilter
+require_once '../module/FlightFilter.php';
 
-// Získanie filtrovacích a triediacich parametrov z GET
-// Použijeme triedu FlightFilter na spracovanie parametrov
 $flightFilter = new FlightFilter();
 
 $search_query = $flightFilter->getSearchQuery();
@@ -48,9 +46,8 @@ try {
 <html lang="en">
 <?php include("head.php") ?>
 <body id="top">
-
 <?php include("header.php") ?>
-
+<script src="../assets/js/script.js"></script>
 <main>
     <article>
         <section class="section flights-page" aria-label="flights">
@@ -119,7 +116,7 @@ try {
                                         </div>
                                         <?php if (!empty($flight['obrazok'])): ?>
                                             <figure class="card-banner img-holder" style="--width: 330; --height: 240;">
-                                                <img src="../assets/images/flights/<?php echo htmlspecialchars($flight['obrazok']); ?>"
+                                                <img src="../images/<?php echo htmlspecialchars($flight['obrazok']); ?>"
                                                      width="330" height="240" loading="lazy"
                                                      alt="<?php echo htmlspecialchars($flight['lietadlo']); ?>"
                                                      class="img-cover">
@@ -209,28 +206,8 @@ try {
         </form>
     </div>
 </div>
-
-<?php include("footer.php") ?>
-
-<script>
-    // Funkcie pre modálne okno filtra
-    function openFilterModal() {
-        document.getElementById('filterModal').classList.add('show');
-    }
-
-    function closeFilterModal() {
-        document.getElementById('filterModal').classList.remove('show');
-    }
-
-    // Zatvorenie modálneho okna kliknutím mimo neho
-    window.onclick = function(event) {
-        const filterModal = document.getElementById('filterModal');
-        if (event.target === filterModal) {
-            filterModal.classList.remove('show');
-        }
-    }
-</script>
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+<?php include("footer.php") ?>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>

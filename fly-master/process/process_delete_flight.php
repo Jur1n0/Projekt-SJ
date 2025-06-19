@@ -3,7 +3,6 @@ session_start();
 require_once '../module/Database.php';
 require_once '../classes/Flight.php';
 
-// Iba admin môže mazať lety
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin' || $_SERVER['REQUEST_METHOD'] !== 'POST') {
     $_SESSION['message'] = "Nemáte oprávnenie na vykonanie tejto operácie.";
     $_SESSION['message_type'] = "error";

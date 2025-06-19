@@ -3,9 +3,8 @@
 class Flight {
     private $conn;
     private $table_name = "flights";
-    private $sales_table_name = "sales"; // Pridajte tabuľku sales
+    private $sales_table_name = "sales";
 
-    // Vlastnosti objektu Flight
     public $id;
     public $lietadlo;
     public $miesto_odletu;
@@ -24,7 +23,6 @@ class Flight {
         $this->conn = $db;
     }
 
-    // Metóda na pridanie nového letu
     public function create() {
         $query = "INSERT INTO " . $this->table_name . "
                   SET
@@ -72,7 +70,23 @@ class Flight {
         }
     }
 
-    // Metóda na prečítanie jedného letu
+    public function readAll() {
+        $query = "SELECT
+                    id, lietadlo, miesto_odletu, miesto_priletu,
+                    datum_cas_odletu, datum_cas_priletu, cena,
+                    kapacita_lietadla, dlzka_letu_hodiny, dlzka_letu_minuty,
+                    obrazok, created_at, updated_at
+                  FROM
+                    " . $this->table_name . "
+                  ORDER BY
+                    datum_cas_odletu DESC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     public function readOne() {
         $query = "SELECT
                       f.id, f.lietadlo, f.miesto_odletu, f.miesto_priletu, f.datum_cas_odletu,
@@ -109,7 +123,6 @@ class Flight {
         return false;
     }
 
-    // Metóda na aktualizáciu letu
     public function update() {
         $query = "UPDATE " . $this->table_name . "
                   SET
@@ -161,7 +174,6 @@ class Flight {
         }
     }
 
-    // Metóda na vymazanie letu
     public function delete() {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
         $stmt = $this->conn->prepare($query);
@@ -176,7 +188,6 @@ class Flight {
         }
     }
 
-    // Metóda na čítanie všetkých letov s filtrovaním a triedením
     public function readFilteredAndSorted(
         $search_query = '', $miesto_odletu = '', $miesto_priletu = '',
         $min_capacity = null, $max_capacity = null,
@@ -185,8 +196,8 @@ class Flight {
         $sort_by = 'datum_cas_odletu', $sort_order = 'ASC'
     ) {
         $query = "SELECT f.*, COALESCE(COUNT(s.flight_id), 0) AS order_count
-                  FROM " . $this->table_name . " f
-                  LEFT JOIN " . $this->sales_table_name . " s ON f.id = s.flight_id "; // JOIN pre popularitu
+              FROM " . $this->table_name . " f
+              LEFT JOIN " . $this->sales_table_name . " s ON f.id = s.flight_id";
 
         $conditions = [];
         $params = [];
@@ -203,19 +214,19 @@ class Flight {
             $conditions[] = "f.miesto_priletu LIKE :miesto_priletu";
             $params[':miesto_priletu'] = '%' . $miesto_priletu . '%';
         }
-        if ($min_capacity !== null) {
+        if ($min_capacity !== null && $min_capacity > 0) {
             $conditions[] = "f.kapacita_lietadla >= :min_capacity";
             $params[':min_capacity'] = $min_capacity;
         }
-        if ($max_capacity !== null) {
+        if ($max_capacity !== null && $max_capacity > 0) {
             $conditions[] = "f.kapacita_lietadla <= :max_capacity";
             $params[':max_capacity'] = $max_capacity;
         }
-        if ($min_price !== null) {
+        if ($min_price !== null && $min_price >= 0) {
             $conditions[] = "f.cena >= :min_price";
             $params[':min_price'] = $min_price;
         }
-        if ($max_price !== null) {
+        if ($max_price !== null && $max_price >= 0) {
             $conditions[] = "f.cena <= :max_price";
             $params[':max_price'] = $max_price;
         }
@@ -232,20 +243,14 @@ class Flight {
             $query .= " WHERE " . implode(" AND ", $conditions);
         }
 
-        $query .= " GROUP BY f.id "; // Group by flight to count sales
+        $query .= " GROUP BY f.id";
 
-        // Overenie a nastavenie poradia stĺpcov pre ORDER BY
-        $allowed_sort_columns = ['datum_cas_odletu', 'cena', 'lietadlo', 'miesto_odletu', 'order_count']; // Pridajte order_count
-        if (!in_array($sort_by, $allowed_sort_columns)) {
-            $sort_by = 'datum_cas_odletu'; // Predvolené, ak je neplatné
+        $query .= " ORDER BY " . $sort_by . " " . $sort_order;
+
+        error_log("Generated query at " . date('Y-m-d H:i:s') . ": " . $query);
+        foreach ($params as $key => $val) {
+            error_log("Parameter $key => " . (is_array($val) ? implode(', ', $val) : $val));
         }
-
-        $sort_order = strtoupper($sort_order);
-        if ($sort_order !== 'ASC' && $sort_order !== 'DESC') {
-            $sort_order = 'ASC'; // Predvolené, ak je neplatné
-        }
-
-        $query .= " ORDER BY " . $sort_by . " " . $sort_order; // Odstránenie "f." pred $sort_by
 
         $stmt = $this->conn->prepare($query);
 
@@ -253,7 +258,13 @@ class Flight {
             $stmt->bindParam($key, $val);
         }
 
-        $stmt->execute();
+        try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Chyba pri načítaní letov: " . $e->getMessage());
+            throw $e;
+        }
+
         return $stmt;
     }
 
@@ -268,7 +279,8 @@ class Flight {
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Vracia pole asociatívnych polí
+
+        return $stmt;
     }
 }
 ?>

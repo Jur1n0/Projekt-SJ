@@ -18,7 +18,7 @@ $obrazok = trim((string)($_POST['Obrazok'] ?? ''));
 if (empty($nadpis) || empty($text)) {
     $_SESSION['message'] = "Nadpis a text novinky sú povinné.";
     $_SESSION['message_type'] = "error";
-    header("Location: ../components/admin_dashboard.php?section=news"); // Presmerovanie späť na sekciu noviniek
+    header("Location: ../components/admin_dashboard.php?section=news");
     exit();
 }
 
@@ -29,7 +29,7 @@ try {
 
     $news->Nadpis = $nadpis;
     $news->Text = $text;
-    $news->Obrazok = !empty($obrazok) ? $obrazok : null; // Ak je prázdne, ulož ako NULL
+    $news->Obrazok = !empty($obrazok) ? $obrazok : null;
 
     if ($news->create()) {
         $_SESSION['message'] = "Novinka bola úspešne pridaná.";
@@ -44,6 +44,6 @@ try {
     error_log("Add news error: " . $e->getMessage());
 }
 
-header("Location: ../components/admin_dashboard.php?section=news"); // Presmerovanie späť na sekciu noviniek
+header("Location: ../components/admin_dashboard.php?section=news");
 exit();
 ?>

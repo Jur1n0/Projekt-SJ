@@ -1255,12 +1255,6 @@ body.active { overflow: hidden; }
   border: 1px solid var(--satin-sheen-gold);
 }
 
-.error-message {
-  color: var(--white);
-  background-color: hsl(0, 70%, 40%);
-  border: 1px solid hsl(0, 80%, 50%);
-}
-
 /* Tlačidlá (Prihlásiť sa, Registrovať sa, Uložiť zmeny atď.) */
 .btn-form-submit {
   background-color: var(--satin-sheen-gold);
@@ -1347,7 +1341,7 @@ body.active { overflow: hidden; }
 
 /* ADMIN TABUĽKA */
 table {
-  width: 100%;
+  width: 120%;
   border-collapse: collapse;
   margin-top: 30px;
   background-color: var(--phthalo-green-3);
@@ -1356,9 +1350,9 @@ table {
 }
 th, td {
   border: 1px solid var(--white_10);
-  padding: 15px;
+  padding: 5px;
   text-align: left;
-  font-size: var(--fs-7);
+  font-size: 1.3rem;
   color: var(--white);
 }
 th {
@@ -1366,7 +1360,7 @@ th {
   color: var(--white);
   font-weight: var(--fw-700);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.2px;
 }
 td {
   background-color: var(--phthalo-green-3);
@@ -1620,7 +1614,7 @@ td {
   background-color: var(--white);
   border-radius: 10px;
   box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.05);
-  color: hsl(240, 2%, 12%);
+  color: var(--white);
 }
 
 .admin-dashboard-header {
@@ -1636,6 +1630,12 @@ td {
   font-size: var(--fs-2);
   color: var(--satin-sheen-gold);
   margin: 0;
+}
+
+h3 {
+  font-size: 24px;
+  color: var(--white);
+  margin-bottom: 1rem;
 }
 
 .admin-dashboard-header .btn-logout {
@@ -2135,17 +2135,17 @@ table td.actions {
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   position: relative; /* Pre umiestnenie tlačidla zatvorenia */
-  color: var(--text-color);
+  color: var(--white);
 }
 
 .modal-content h2 {
-  color: var(--text-color);
+  color: var(--white);
   margin-bottom: 20px;
   text-align: center;
 }
 
 .modal-content h3 {
-  color: var(--text-color);
+  color: var(--white);
   margin-top: 25px;
   margin-bottom: 15px;
   border-bottom: 1px solid var(--satin-sheen-gold);
@@ -2160,20 +2160,23 @@ table td.actions {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: var(--text-color);
+  color: var(--white);
 }
 
 .modal-content input[type="text"],
 .modal-content input[type="number"],
 .modal-content input[type="date"],
-.modal-content select {
+.modal-content input[type="email"],
+.modal-content select,
+#editFlightDatumCasOdletu,
+#editFlightDatumCasPriletu{
   width: calc(100% - 20px); /* Odpočítame padding */
   padding: 10px;
   border: 1px solid var(--satin-sheen-gold);
   border-radius: 5px;
   background-color: var(--phthalo-green-1);
-  color: var(--text-color);
-  font-size: 1rem;
+  color: var(--white);
+  font-size: 16px;
 }
 
 .modal-content button.btn {
@@ -2188,6 +2191,7 @@ table td.actions {
 .modal-content .btn-primary {
   background-color: var(--satin-sheen-gold);
   color: var(--white);
+  font-size: 20px;
   border: none;
 }
 
@@ -2237,3 +2241,383 @@ table td.actions {
   padding: 12px 25px;
   font-size: 1.1rem;
 }
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.cart-table th, .cart-table td {
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+  color: var(--text-color);
+}
+
+.cart-table th {
+  background-color: var(--background-secondary);
+  font-weight: bold;
+  color: var(--heading-color);
+}
+
+.cart-table tr:nth-child(even) {
+  background-color: var(--background-light);
+}
+
+.cart-table tr:hover {
+  background-color: var(--background-hover);
+}
+
+.cart-table .form-group {
+  margin-bottom: 0; /* Odstráni medzeru pod formulárovými prvkami v tabuľke */
+}
+
+.cart-table input[type="checkbox"],
+.cart-table input[type="radio"] {
+  margin-right: 5px;
+  transform: scale(1.2); /* Zväčší checkbox/radio button */
+}
+
+.cart-table label {
+  display: inline-block;
+  margin-right: 15px;
+  font-weight: normal;
+}
+
+.cart-table select {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--background-primary);
+  color: var(--text-color);
+  width: 100%; /* Vyplní stĺpec */
+}
+
+.cart-table textarea {
+  width: calc(100% - 16px); /* Zohľadni padding */
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--background-primary);
+  color: var(--text-color);
+  min-height: 60px; /* Aby bolo vidno viac riadkov */
+  resize: vertical; /* Umožní vertikálne zmenu veľkosti */
+}
+
+.cart-total-row {
+  font-weight: bold;
+  background-color: var(--background-secondary);
+}
+
+.cart-total-row td {
+  text-align: right;
+}
+
+.cart-total-row .total-amount {
+  font-size: 1.2em;
+  color: var(--orange-color);
+}
+
+.checkout-buttons {
+  margin-top: 30px;
+  text-align: right;
+}
+
+.checkout-buttons .btn {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  margin-left: 15px;
+}
+
+.delete-item-btn {
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-item-btn:hover {
+  background-color: #c82333;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.info-message {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+.warning-message {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.cart-table th, .cart-table td {
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+  color: var(--text-color);
+}
+
+.cart-table th {
+  background-color: var(--background-secondary);
+  font-weight: bold;
+  color: var(--heading-color);
+}
+
+.cart-table tr:nth-child(even) {
+  background-color: var(--background-light);
+}
+
+.cart-table tr:hover {
+  background-color: var(--background-hover);
+}
+
+.cart-total-row {
+  font-weight: bold;
+  background-color: var(--background-secondary);
+}
+
+.cart-total-row td {
+  text-align: right;
+}
+
+.cart-total-row .total-amount {
+  font-size: 1.2em;
+  color: var(--orange-color);
+}
+
+.checkout-form-container {
+  background-color: var(--background-primary);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: var(--shadow-2);
+  margin-top: 30px;
+}
+
+.checkout-form-container h3 {
+  color: var(--heading-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.checkout-form-container .form-group {
+  margin-bottom: 20px;
+}
+
+.checkout-form-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.checkout-form-container input[type="text"],
+.checkout-form-container input[type="email"],
+.checkout-form-container input[type="password"],
+.checkout-form-container input[type="number"],
+.checkout-form-container select {
+  width: calc(100% - 20px); /* Adjust for padding */
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--background-secondary);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.checkout-form-container .checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.checkout-form-container .checkbox-group input[type="checkbox"] {
+  width: auto;
+  transform: scale(1.2);
+}
+
+.checkout-form-container .gdpr-label {
+  font-weight: normal;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.place-order-btn {
+  margin-top: 25px;
+  width: 100%;
+  padding: 15px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.place-order-btn:hover {
+  opacity: 0.9;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.thankyou-page {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: var(--phthalo-green-2);
+  color: var(--text-color);
+  min-height: calc(100vh - 200px); /* Upravte podľa výšky hlavičky a pätičky */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.thankyou-page .icon {
+  font-size: 80px;
+  color: green; /* Farba pre úspešnú ikonu */
+  margin-bottom: 20px;
+}
+
+.thankyou-page h2 {
+  font-size: 2.5rem;
+  color: green;
+  margin-bottom: 20px;
+}
+
+.thankyou-page p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  max-width: 600px;
+}
+
+.thankyou-page .btn {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  margin: 0 10px;
+}
+
+.message {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  max-width: 500px;
+  width: 100%;
+}
+
+.success-message {
+  margin: 0 auto;
+  max-width: 1200px;
+  margin-top: 20px;
+  background-color: green;
+  color: white;
+  border: 1px solid #c3e6cb;
+}
+
+/* Styling for the user dashboard table, similar to admin dashboard */
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--background-primary);
+  border-radius: 10px;
+  box-shadow: var(--shadow-2);
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.dashboard-container h2, .dashboard-container h3 {
+  color: var(--heading-color);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-container p {
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.dashboard-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.dashboard-container th,
+.dashboard-container td {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  text-align: left;
+  color: var(--text-color);
+}
+
+.dashboard-container th {
+  background-color: var(--background-secondary);
+  font-weight: bold;
+  color: var(--heading-color);
+}
+
+.dashboard-container tr:nth-child(even) {
+  background-color: var(--background-light);
+}
+
+.dashboard-container tr:hover {
+  background-color: var(--background-hover);
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+

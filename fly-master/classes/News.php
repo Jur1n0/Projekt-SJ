@@ -14,7 +14,6 @@ class News {
         $this->conn = $db;
     }
 
-    // Metóda na pridanie novej novinky
     public function create() {
         $query = "INSERT INTO " . $this->table_name . "
                   SET
@@ -24,12 +23,10 @@ class News {
 
         $stmt = $this->conn->prepare($query);
 
-        // Očistenie dát
         $this->Nadpis = htmlspecialchars(strip_tags($this->Nadpis));
         $this->Text = htmlspecialchars(strip_tags($this->Text));
         $this->Obrazok = htmlspecialchars(strip_tags($this->Obrazok));
 
-        // Bindovanie parametrov
         $stmt->bindParam(':Nadpis', $this->Nadpis);
         $stmt->bindParam(':Text', $this->Text);
         $stmt->bindParam(':Obrazok', $this->Obrazok);
@@ -40,7 +37,6 @@ class News {
         return false;
     }
 
-    // Metóda na čítanie všetkých noviniek
     public function readAll() {
         $query = "SELECT idNews, Nadpis, Text, Obrazok, created_at FROM " . $this->table_name . " ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($query);
@@ -53,7 +49,6 @@ class News {
         }
     }
 
-    // Metóda na čítanie jedného záznamu novinky
     public function readOne() {
         $query = "SELECT idNews, Nadpis, Text, Obrazok, created_at FROM " . $this->table_name . " WHERE idNews = ? LIMIT 0,1";
         $stmt = $this->conn->prepare($query);
@@ -71,7 +66,6 @@ class News {
         return false;
     }
 
-    // Metóda na aktualizáciu novinky
     public function update() {
         $query = "UPDATE " . $this->table_name . "
                   SET
@@ -84,13 +78,11 @@ class News {
 
         $stmt = $this->conn->prepare($query);
 
-        // Očistenie dát
         $this->Nadpis = htmlspecialchars(strip_tags($this->Nadpis));
         $this->Text = htmlspecialchars(strip_tags($this->Text));
         $this->Obrazok = htmlspecialchars(strip_tags($this->Obrazok));
         $this->idNews = htmlspecialchars(strip_tags($this->idNews));
 
-        // Bindovanie parametrov
         $stmt->bindParam(':Nadpis', $this->Nadpis);
         $stmt->bindParam(':Text', $this->Text);
         $stmt->bindParam(':Obrazok', $this->Obrazok);
@@ -102,16 +94,13 @@ class News {
         return false;
     }
 
-    // Metóda na zmazanie novinky
     public function delete() {
         $query = "DELETE FROM " . $this->table_name . " WHERE idNews = ?";
 
         $stmt = $this->conn->prepare($query);
 
-        // Očistenie dát
         $this->idNews = htmlspecialchars(strip_tags($this->idNews));
 
-        // Bindovanie parametra
         $stmt->bindParam(1, $this->idNews);
 
         if ($stmt->execute()) {

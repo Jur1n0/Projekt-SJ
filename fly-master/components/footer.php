@@ -1,3 +1,4 @@
+<link href="../assets/js/script.js">
 <footer class="footer" style="background-image: url('../assets/images/footer-bg.png')">
     <div class="container">
         <div class="footer-top section grid-list">
@@ -6,49 +7,9 @@
                     <img src="../assets/images/logo.svg" width="102" height="48" alt="fly logo">
                 </a>
                 <p class="footer-text">
-                    Private jet charters save your time and give you comfort.
+                    Lietajte s nami v luxuse a šetrite čas a peniaze
                 </p>
             </div>
-            <ul class="footer-list">
-                <li>
-                    <p class="footer-list-title">Explore</p>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">About</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Private Jet Catering</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Destinations</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Flight Search</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Book Flight</a>
-                </li>
-            </ul>
-            <ul class="footer-list">
-                <li>
-                    <p class="footer-list-title">Links</p>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Terms of Use</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Contact</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">News & Press</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Games</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">FAQs</a>
-                </li>
-            </ul>
             <ul class="footer-list">
                 <li>
                     <p class="footer-list-title">Contact</p>
@@ -98,10 +59,9 @@
         </div>
     </div>
 </footer>
-
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <link rel="stylesheet" href="../assets/css/style.css">
 <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
     <ion-icon name="arrow-up-outline" aria-hidden="true"></ion-icon>
 </a>
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

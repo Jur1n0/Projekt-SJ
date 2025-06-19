@@ -2,8 +2,8 @@
 session_start();
 require_once '../module/Database.php';
 require_once '../classes/Sale.php';
-require_once '../classes/Flight.php'; // Môžeš potrebovať na overenie cien alebo detailov letu
-require_once '../classes/Cart.php'; // Pre načítanie položiek košíka z DB
+require_once '../classes/Flight.php';
+require_once '../classes/Cart.php';
 
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['message'] = "Pre dokončenie objednávky sa musíte prihlásiť.";
@@ -15,11 +15,10 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $_SESSION['message'] = "Neplatná požiadavka.";
     $_SESSION['message_type'] = "error";
-    header("Location: ../components/cart.php"); // Presmerovať na stránku košíka
+    header("Location: ../components/cart.php");
     exit();
 }
 
-// Získanie údajov z formulára checkoutu (predpokladáme, že tu sú aj platobné údaje atď.)
 $payment_method = trim((string)($_POST['payment_method'] ?? ''));
 $gdpr_consent_checkout = isset($_POST['gdpr_consent_checkout']) ? 1 : 0;
 
@@ -61,9 +60,7 @@ try {
         exit();
     }
 
-    // Pre každú položku v košíku vytvoríme záznam v tabuľke sales
     foreach ($cart_items as $item) {
-        // Kontrola, či let stále existuje a je dostupný (voliteľné, ale dobré pre integritu)
         $flight_obj = new Flight($pdo_conn);
         $flight_obj->id = $item['flight_id'];
         if (!$flight_obj->readOne()) {
@@ -74,34 +71,32 @@ try {
 
         $sale_obj->user_id = $user_id;
         $sale_obj->flight_id = $item['flight_id'];
-        $sale_obj->total_price = $item['price_at_addition'];         // Cena s balíčkami z košíka
+        $sale_obj->total_price = $item['price_at_addition'];
         $sale_obj->service_package = $item['service_package'];
         $sale_obj->pickup_service = $item['pickup_service'];
         $sale_obj->dropoff_service = $item['dropoff_service'];
-        $sale_obj->notes = $item['notes'];                     // Preberáme z DB
-        $sale_obj->payment_method = $payment_method;           // Z formulára checkoutu
-        // payment_status a order_status sa nastavujú v triede Sale::create() na 'pending'
+        $sale_obj->notes = $item['notes'];
+        $sale_obj->payment_method = $payment_method;
 
         if (!$sale_obj->create()) {
             $success = false;
             $error_message = "Chyba pri vytváraní objednávky pre let ID: " . $item['flight_id'];
             error_log("Chyba checkoutu pre užívateľa " . $user_id . ": " . $error_message);
-            break; // Ak zlyhá jedna objednávka, zastav spracovanie
+            break;
         }
     }
 
     if ($success) {
-        // Po úspešnom vytvorení všetkých predajov vyprázdnime košík
         if ($cart_obj->clearCart($user_id)) {
             $_SESSION['message'] = "Vaša objednávka bola úspešne dokončená! Potvrdenie bolo odoslané na váš e-mail.";
             $_SESSION['message_type'] = "success";
-            header("Location: ../components/thankyou.php"); // Presmerovanie na Thank You page
+            header("Location: ../components/thankyou.php");
             exit();
         } else {
             $_SESSION['message'] = "Objednávka bola vytvorená, ale košík sa nepodarilo vyprázdniť.";
             $_SESSION['message_type'] = "warning";
             error_log("Order created for user " . $user_id . " but cart not cleared.");
-            header("Location: ../components/thankyou.php"); // Aj tak presmerovať na Thank You
+            header("Location: ../components/thankyou.php");
             exit();
         }
     } else {

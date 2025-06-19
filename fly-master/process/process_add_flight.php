@@ -3,7 +3,6 @@ session_start();
 require_once '../module/Database.php';
 require_once '../classes/Flight.php';
 
-// Iba admin môže pridávať lety
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin' || $_SERVER['REQUEST_METHOD'] !== 'POST') {
     $_SESSION['message'] = "Nemáte oprávnenie na vykonanie tejto operácie.";
     $_SESSION['message_type'] = "error";
@@ -11,7 +10,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin' || $_SERVER['R
     exit();
 }
 
-// Získanie dát z POST požiadavky
 $lietadlo = trim((string)($_POST['lietadlo'] ?? ''));
 $miesto_odletu = trim((string)($_POST['miesto_odletu'] ?? ''));
 $miesto_priletu = trim((string)($_POST['miesto_priletu'] ?? ''));
@@ -23,7 +21,6 @@ $dlzka_letu_hodiny = filter_input(INPUT_POST, 'dlzka_letu_hodiny', FILTER_VALIDA
 $dlzka_letu_minuty = filter_input(INPUT_POST, 'dlzka_letu_minuty', FILTER_VALIDATE_INT);
 $obrazok = trim((string)($_POST['obrazok'] ?? ''));
 
-// Validácia vstupov
 if (empty($lietadlo) || empty($miesto_odletu) || empty($miesto_priletu) ||
     empty($datum_cas_odletu_str) || empty($datum_cas_priletu_str) ||
     $cena === false || $cena <= 0 ||
@@ -37,8 +34,6 @@ if (empty($lietadlo) || empty($miesto_odletu) || empty($miesto_priletu) ||
     exit();
 }
 
-// Konverzia dátumu a času do formátu DATETIME
-// Zabezpečenie správneho formátu pre databázu
 try {
     $datum_cas_odletu = new DateTime($datum_cas_odletu_str);
     $datum_cas_priletu = new DateTime($datum_cas_priletu_str);
@@ -49,7 +44,6 @@ try {
     exit();
 }
 
-// Overenie, či čas príletu nie je pred časom odletu
 if ($datum_cas_priletu <= $datum_cas_odletu) {
     $_SESSION['message'] = "Dátum a čas príletu musí byť po dátume a čase odletu.";
     $_SESSION['message_type'] = "error";

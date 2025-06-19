@@ -18,6 +18,10 @@ class Database {
             die("Chyba pripojenia k databáze. Prosím, skúste to neskôr alebo kontaktujte administrátora.");
         }
     }
+
+    public function __destruct() {
+        $this->pdo = null;
+    }
     public function getConnection(){
         return $this->pdo;
     }

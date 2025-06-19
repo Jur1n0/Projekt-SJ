@@ -3,26 +3,24 @@ class Cart
 {
     private $conn;
     private $table_name = "cart_items";
-    private $flights_table_name = "flights"; // Pre získanie detailov letu
+    private $flights_table_name = "flights";
 
-    public $id; // ID položky v košíku
+    public $id;
     public $user_id;
     public $flight_id;
-    public $price_at_addition; // Cena letu v čase pridania do košíka (základná cena letu)
-    public $service_package; // Budget, Comfy, Luxury
-    public $pickup_service; // 0 alebo 1
-    public $dropoff_service; // 0 alebo 1
-    public $notes; // Akékoľvek poznámky
+    public $price_at_addition;
+    public $service_package;
+    public $pickup_service;
+    public $dropoff_service;
+    public $notes;
 
     public function __construct($db)
     {
         $this->conn = $db;
     }
 
-    // Metóda na pridanie letu do košíka
     public function addToCart()
     {
-        // Kontrola, či už let nie je v košíku pre daného používateľa (len na základe flight_id, nie služieb)
         $query_check = "SELECT id FROM " . $this->table_name . "
                         WHERE user_id = :user_id AND flight_id = :flight_id LIMIT 1";
         $stmt_check = $this->conn->prepare($query_check);
@@ -31,7 +29,6 @@ class Cart
         $stmt_check->execute();
 
         if ($stmt_check->rowCount() > 0) {
-            // Let už je v košíku, môžete zvážiť aktualizáciu alebo vrátiť false
             return false;
         }
 
@@ -72,7 +69,6 @@ class Cart
         }
     }
 
-    // Metóda na čítanie položiek košíka pre daného používateľa
     public function readByUserId($user_id)
     {
         $query = "SELECT ci.*, f.cena as flight_base_price, f.kapacita_lietadla
@@ -87,7 +83,6 @@ class Cart
         return $stmt;
     }
 
-    // Metóda na aktualizáciu služieb pre položku v košíku
     public function updateCartItemServices(
         $cart_item_id, $user_id, $service_package, $pickup_service, $dropoff_service, $new_calculated_price, $notes
     ) {
@@ -126,7 +121,6 @@ class Cart
     }
 
 
-    // Metóda na vymazanie položky z košíka
     public function deleteCartItem()
     {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = :id AND user_id = :user_id";
@@ -141,7 +135,6 @@ class Cart
         }
     }
 
-    // Metóda na vyprázdnenie košíka po objednávke
     public function clearCart($user_id)
     {
         $query = "DELETE FROM " . $this->table_name . " WHERE user_id = :user_id";

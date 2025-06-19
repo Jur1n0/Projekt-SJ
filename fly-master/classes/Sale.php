@@ -2,8 +2,8 @@
 class Sale {
     private $conn;
     private $table_name = "sales";
-    private $flights_table_name = "flights"; // Pre získanie detailov letu
-    private $users_table_name = "users";     // Pre získanie detailov používateľa
+    private $flights_table_name = "flights";
+    private $users_table_name = "users";
 
     public $id_sale;
     public $user_id;
@@ -14,15 +14,14 @@ class Sale {
     public $dropoff_service;
     public $notes;
     public $payment_method;
-    public $payment_status; // 'pending', 'paid'
-    public $order_status;   // 'pending', 'cancelled', 'completed'
+    public $payment_status;
+    public $order_status;
     public $sale_date;
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Metóda na vytvorenie novej objednávky (po checkoute)
     public function create() {
         $query = "INSERT INTO " . $this->table_name . "
                   SET
@@ -66,7 +65,6 @@ class Sale {
         }
     }
 
-    // Metóda na čítanie všetkých objednávok (pre admina)
     public function readAll() {
         $query = "SELECT s.*, f.lietadlo, f.miesto_odletu, f.miesto_priletu, f.datum_cas_odletu,
                          u.first_name, u.last_name, u.email
@@ -79,7 +77,6 @@ class Sale {
         return $stmt;
     }
 
-    // Metóda na čítanie objednávok pre konkrétneho používateľa
     public function readByUserId($user_id) {
         $query = "SELECT s.*, f.lietadlo, f.miesto_odletu, f.miesto_priletu, f.datum_cas_odletu
                   FROM " . $this->table_name . " s
@@ -92,7 +89,6 @@ class Sale {
         return $stmt;
     }
 
-    // Metóda na čítanie jednej objednávky (pre validáciu statusu)
     public function readOne() {
         $query = "SELECT s.payment_status, s.order_status
                   FROM " . $this->table_name . " s
@@ -110,7 +106,6 @@ class Sale {
         return false;
     }
 
-    // Metóda na aktualizáciu stavu objednávky a platby
     public function updateStatus() {
         $query = "UPDATE " . $this->table_name . "
                   SET

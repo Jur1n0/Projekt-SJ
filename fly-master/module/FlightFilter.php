@@ -19,18 +19,16 @@ class FlightFilter
         $this->search_query = trim((string)($_GET['search'] ?? ''));
         $this->miesto_odletu = trim((string)($_GET['miesto_odletu'] ?? ''));
         $this->miesto_priletu = trim((string)($_GET['miesto_priletu'] ?? ''));
-        $this->min_capacity = filter_input(INPUT_GET, 'min_capacity', FILTER_VALIDATE_INT);
-        $this->max_capacity = filter_input(INPUT_GET, 'max_capacity', FILTER_VALIDATE_INT);
-        $this->min_price = filter_input(INPUT_GET, 'min_price', FILTER_VALIDATE_FLOAT);
-        $this->max_price = filter_input(INPUT_GET, 'max_price', FILTER_VALIDATE_FLOAT);
+        $this->min_capacity = filter_input(INPUT_GET, 'min_capacity', FILTER_VALIDATE_INT) ?: null;
+        $this->max_capacity = filter_input(INPUT_GET, 'max_capacity', FILTER_VALIDATE_INT) ?: null;
+        $this->min_price = filter_input(INPUT_GET, 'min_price', FILTER_VALIDATE_FLOAT) ?: null;
+        $this->max_price = filter_input(INPUT_GET, 'max_price', FILTER_VALIDATE_FLOAT) ?: null;
         $this->date_from = trim((string)($_GET['date_from'] ?? ''));
         $this->date_to = trim((string)($_GET['date_to'] ?? ''));
 
-        // Predvolené hodnoty pre triedenie
         $this->sort_by = trim((string)($_GET['sort_by'] ?? 'datum_cas_odletu'));
         $this->sort_order = trim((string)($_GET['sort_order'] ?? 'ASC'));
 
-        // Validácia sort_by a sort_order
         $allowed_sort_by = ['datum_cas_odletu', 'cena', 'lietadlo', 'miesto_odletu', 'order_count'];
         if (!in_array($this->sort_by, $allowed_sort_by)) {
             $this->sort_by = 'datum_cas_odletu';
@@ -42,7 +40,6 @@ class FlightFilter
         }
     }
 
-    // Gettery pre všetky vlastnosti
     public function getSearchQuery() { return $this->search_query; }
     public function getMiestoOdletu() { return $this->miesto_odletu; }
     public function getMiestoPriletu() { return $this->miesto_priletu; }
@@ -69,19 +66,19 @@ class FlightFilter
             $conditions[] = "f.miesto_priletu LIKE :miesto_priletu";
             $params[':miesto_priletu'] = '%' . $this->miesto_priletu . '%';
         }
-        if ($this->min_capacity !== null) {
+        if ($this->min_capacity !== null && $this->min_capacity > 0) {
             $conditions[] = "f.kapacita_lietadla >= :min_capacity";
             $params[':min_capacity'] = $this->min_capacity;
         }
-        if ($this->max_capacity !== null) {
+        if ($this->max_capacity !== null && $this->max_capacity > 0) {
             $conditions[] = "f.kapacita_lietadla <= :max_capacity";
             $params[':max_capacity'] = $this->max_capacity;
         }
-        if ($this->min_price !== null) {
+        if ($this->min_price !== null && $this->min_price > 0) {
             $conditions[] = "f.cena >= :min_price";
             $params[':min_price'] = $this->min_price;
         }
-        if ($this->max_price !== null) {
+        if ($this->max_price !== null && $this->max_price > 0) {
             $conditions[] = "f.cena <= :max_price";
             $params[':max_price'] = $this->max_price;
         }

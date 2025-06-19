@@ -7,20 +7,20 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] === 'admin') {
 
 require_once '../module/Database.php';
 require_once '../classes/User.php';
-require_once '../classes/Sale.php'; // Zahrnutie triedy Sale
+require_once '../classes/Sale.php';
 
 $user_id = $_SESSION['user_id'];
 $first_name = "Neznámy";
 $last_name = "Neznáme";
 $email = "Neznámy";
 $role = "Neznáma";
-$user_sales = []; // Pole pre objednávky používateľa
+$user_sales = [];
 
 try {
     $db = new Database();
     $pdo_conn = $db->getConnection();
     $user_obj = new User($pdo_conn);
-    $sale_obj = new Sale($pdo_conn); // Inštancia triedy Sale
+    $sale_obj = new Sale($pdo_conn);
 
     $user_obj->id = $user_id;
 
@@ -36,7 +36,6 @@ try {
         exit();
     }
 
-    // Načítanie objednávok pre prihláseného používateľa
     $stmt_sales = $sale_obj->readByUserId($user_id);
     if ($stmt_sales && $stmt_sales->rowCount() > 0) {
         while ($row = $stmt_sales->fetch(PDO::FETCH_ASSOC)) {
@@ -52,89 +51,6 @@ try {
 ?>
 <?php include("head.php") ?>
 <?php include("header.php") ?>
-<style>
-    /* Styling for the user dashboard table, similar to admin dashboard */
-    .dashboard-container {
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        background-color: var(--background-primary);
-        border-radius: 10px;
-        box-shadow: var(--shadow-2);
-        margin-top: 30px;
-        margin-bottom: 30px;
-    }
-
-    .dashboard-container h2, .dashboard-container h3 {
-        color: var(--heading-color);
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .dashboard-container p {
-        color: var(--text-color);
-        margin-bottom: 10px;
-    }
-
-    .dashboard-container table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    .dashboard-container th,
-    .dashboard-container td {
-        border: 1px solid var(--border-color);
-        padding: 10px;
-        text-align: left;
-        color: var(--text-color);
-    }
-
-    .dashboard-container th {
-        background-color: var(--background-secondary);
-        font-weight: bold;
-        color: var(--heading-color);
-    }
-
-    .dashboard-container tr:nth-child(even) {
-        background-color: var(--background-light);
-    }
-
-    .dashboard-container tr:hover {
-        background-color: var(--background-hover);
-    }
-
-    .message {
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-
-    .success-message {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-
-    .error-message {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-
-    .info-message {
-        background-color: #d1ecf1;
-        color: #0c5460;
-        border: 1px solid #bee5eb;
-    }
-
-    .warning-message {
-        background-color: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeeba;
-    }
-</style>
 <body>
 <main id="user-dashboard-page" class="main-content">
     <div class="dashboard-container">
@@ -204,9 +120,8 @@ try {
     </div>
 </main>
 
+</body>
 <?php include("footer.php") ?>
-
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-</body>
 </html>

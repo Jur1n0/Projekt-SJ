@@ -108,7 +108,6 @@
             }
         } catch (Exception $e) {
             error_log("Error fetching latest news on index.php: " . $e->getMessage());
-            // Môžete tu pridať aj užívateľsky prívetivú správu, ak je to potrebné
         }
         ?>
 
@@ -150,7 +149,7 @@
                                         </ul>
 
                                         <p class="card-text">
-                                            <?php echo htmlspecialchars(mb_strimwidth($news_item['Text'], 0, 150, "...")); // Zobrazíme len útržok textu ?>
+                                            <?php echo htmlspecialchars(mb_strimwidth($news_item['Text'], 0, 150, "...")); ?>
                                         </p>
                                     </div>
                                 </div>
@@ -175,7 +174,7 @@
             $db = new Database();
             $pdo_conn = $db->getConnection();
             $flight_obj = new Flight($pdo_conn);
-            $stmt_popular = $flight_obj->readPopularFlights(4); // Načíta 4 najpopulárnejšie lety
+            $stmt_popular = $flight_obj->readPopularFlights(4);
 
             if ($stmt_popular && $stmt_popular->rowCount() > 0) {
                 while($row = $stmt_popular->fetch(PDO::FETCH_ASSOC)) {
@@ -184,9 +183,6 @@
             }
         } catch (Exception $e) {
             error_log("Error fetching popular flights: " . $e->getMessage());
-            // Môžeš nastaviť session message, ak chceš, aby používateľ videl chybu
-            // $_SESSION['message'] = "Chyba pri načítaní populárnych letov.";
-            // $_SESSION['message_type'] = "error";
         }
         ?>
 
@@ -247,32 +243,12 @@
                 </div>
             </div>
         </section>
-
-        <section class="section newsletter has-bg-image"
-                 style="background-image: url('../assets/images/newsletter-bg.png')" aria-label="newsletter" id="contact">
-            <div class="container">
-                <div>
-                    <p class="section-subtitle">Subscribe Now</p>
-                    <h2 class="h2 section-title">Want to know about our offers first?</h2>
-                </div>
-                <div>
-                    <form action="" class="newsletter-form">
-                        <input type="email" name="email_address" placeholder="Enter email address" class="input-field">
-                        <button type="submit" class="btn btn-secondary">
-                            Subscribe
-                            <ion-icon name="airplane" aria-hidden="true"></ion-icon>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
     </article>
 </main>
 
-<?php include("footer.php") ?>
-
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
+<?php include("footer.php") ?>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>

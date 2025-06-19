@@ -23,14 +23,11 @@ try {
     $db = new Database();
     $pdo_conn = $db->getConnection();
     $cart_obj = new Cart($pdo_conn);
-    $flight_obj = new Flight($pdo_conn); // Pre získanie detailov letu pri zobrazení
+    $flight_obj = new Flight($pdo_conn);
     $sale_obj = new Sale($pdo_conn);
-
-    // Načítanie položiek košíka
     $stmt = $cart_obj->readByUserId($user_id);
     if ($stmt && $stmt->rowCount() > 0) {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            // Pre každú položku v košíku získame detaily letu
             $flight_obj->id = $row['flight_id'];
             if ($flight_obj->readOne()) {
                 $row['flight_details'] = [
@@ -43,10 +40,10 @@ try {
                     'cena' => $flight_obj->cena,
                 ];
             } else {
-                $row['flight_details'] = null; // Let nebol nájdený
+                $row['flight_details'] = null;
             }
             $cart_items[] = $row;
-            $total_cart_price += $row['price_at_addition']; // Súčet už vypočítaných cien z košíka
+            $total_cart_price += $row['price_at_addition'];
         }
     } else {
         $_SESSION['message'] = "Váš košík je prázdny. Nemôžete prejsť k platbe.";
@@ -55,7 +52,6 @@ try {
         exit();
     }
 
-    // Spracovanie správ
     if (isset($_SESSION['message'])) {
         $message = $_SESSION['message'];
         $message_type = $_SESSION['message_type'];
@@ -74,157 +70,8 @@ try {
 <!DOCTYPE html>
 <html lang="en">
 <?php include("head.php") ?>
-<style>
-    /* Základné štýly pre tabuľku košíka (môžu byť rovnaké ako v cart.php) */
-    .cart-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    .cart-table th, .cart-table td {
-        border: 1px solid var(--border-color);
-        padding: 12px;
-        text-align: left;
-        vertical-align: middle;
-        color: var(--text-color);
-    }
-
-    .cart-table th {
-        background-color: var(--background-secondary);
-        font-weight: bold;
-        color: var(--heading-color);
-    }
-
-    .cart-table tr:nth-child(even) {
-        background-color: var(--background-light);
-    }
-
-    .cart-table tr:hover {
-        background-color: var(--background-hover);
-    }
-
-    .cart-total-row {
-        font-weight: bold;
-        background-color: var(--background-secondary);
-    }
-
-    .cart-total-row td {
-        text-align: right;
-    }
-
-    .cart-total-row .total-amount {
-        font-size: 1.2em;
-        color: var(--orange-color);
-    }
-
-    .checkout-form-container {
-        background-color: var(--background-primary);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: var(--shadow-2);
-        margin-top: 30px;
-    }
-
-    .checkout-form-container h3 {
-        color: var(--heading-color);
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .checkout-form-container .form-group {
-        margin-bottom: 20px;
-    }
-
-    .checkout-form-container label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        color: var(--text-color);
-    }
-
-    .checkout-form-container input[type="text"],
-    .checkout-form-container input[type="email"],
-    .checkout-form-container input[type="password"],
-    .checkout-form-container input[type="number"],
-    .checkout-form-container select {
-        width: calc(100% - 20px); /* Adjust for padding */
-        padding: 10px;
-        border: 1px solid var(--border-color);
-        border-radius: 5px;
-        background-color: var(--background-secondary);
-        color: var(--text-color);
-        font-size: 1rem;
-    }
-
-    .checkout-form-container .checkbox-group {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    .checkout-form-container .checkbox-group input[type="checkbox"] {
-        width: auto;
-        transform: scale(1.2);
-    }
-
-    .checkout-form-container .gdpr-label {
-        font-weight: normal;
-        margin-bottom: 0;
-        cursor: pointer;
-    }
-
-    .place-order-btn {
-        margin-top: 25px;
-        width: 100%;
-        padding: 15px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    .place-order-btn:hover {
-        opacity: 0.9;
-    }
-
-    .message {
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-
-    .success-message {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-
-    .error-message {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-
-    .info-message {
-        background-color: #d1ecf1;
-        color: #0c5460;
-        border: 1px solid #bee5eb;
-    }
-
-    .warning-message {
-        background-color: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeeba;
-    }
-
-</style>
 <body id="top">
-
 <?php include("header.php") ?>
-
 <main>
     <article>
         <section class="section checkout-page" aria-label="checkout">
@@ -329,44 +176,8 @@ try {
         </section>
     </article>
 </main>
-
-<?php include("footer.php") ?>
-
-<script>
-    // Zobrazenie/skrytie detailov karty
-    document.getElementById('payment_method').addEventListener('change', function() {
-        const cardDetails = document.getElementById('card_details');
-        if (this.value === 'card') {
-            cardDetails.style.display = 'block';
-            cardDetails.querySelectorAll('input').forEach(input => input.setAttribute('required', 'required'));
-        } else {
-            cardDetails.style.display = 'none';
-            cardDetails.querySelectorAll('input').forEach(input => input.removeAttribute('required'));
-        }
-    });
-
-    // Simulácia platby - odstránime require z kariet pre ostatné platobné metódy
-    document.addEventListener('DOMContentLoaded', function() {
-        const paymentMethodSelect = document.getElementById('payment_method');
-        const cardDetailsInputs = document.querySelectorAll('#card_details input');
-
-        function toggleCardRequired() {
-            if (paymentMethodSelect.value === 'card') {
-                cardDetailsInputs.forEach(input => input.setAttribute('required', 'required'));
-                document.getElementById('card_details').style.display = 'block';
-            } else {
-                cardDetailsInputs.forEach(input => input.removeAttribute('required'));
-                document.getElementById('card_details').style.display = 'none';
-            }
-        }
-
-        paymentMethodSelect.addEventListener('change', toggleCardRequired);
-
-        // Initial call in case the default value is 'card'
-        toggleCardRequired();
-    });
-</script>
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+<?php include("footer.php") ?>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
